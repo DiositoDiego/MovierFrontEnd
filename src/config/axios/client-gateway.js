@@ -34,8 +34,8 @@ AxiosClient.interceptors.response.use(
 )
 
 export default {
-  doGet(endPoint, object) {
-    return AxiosClient.get(endPoint, object);
+  doGet(endPoint) {
+    return AxiosClient.get(endPoint);
   },
   doPost(endPoint, object) {
     return AxiosClient.post(endPoint, object);
@@ -46,7 +46,7 @@ export default {
   doPatch(endPoint, object) {
     return AxiosClient.patch(endPoint, object);
   },
-  doDelete(endPoint, object) {
-    return AxiosClient.delete(endPoint, object);
+  doDelete(endPoint) {
+    return AxiosClient.delete(endPoint);
   }
 }

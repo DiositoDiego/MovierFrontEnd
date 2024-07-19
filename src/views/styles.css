@@ -1,0 +1,12 @@
+.movies-container {
+  display: grid;
+  grid-template-columns: repeat(5, 320px);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.movie:hover {
+  scale: 1.025;
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
+}
