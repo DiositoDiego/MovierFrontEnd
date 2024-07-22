@@ -25,8 +25,8 @@ export default function MoviesNavbar() {
 
   return ( 
   <div>
-    <Navbar bg="light" expand="lg">
-      <Container fluid>
+    <Navbar style={{margin: 0}} bg="light" expand="lg">
+      <Container fluid style={{backgroundColor: "#72557C"}}>
         <Navbar.Brand href="/movies" style={styles.brand}>
           <img
             src="https://picsum.photos/150"
