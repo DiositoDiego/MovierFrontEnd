@@ -20,12 +20,20 @@ export default function MoviesNavbar() {
     },
     user: {
       margin: '20px'
+    },
+    footer: {
+      height: "10px",
+      width: "100%",
+      backgroundColor: "#563B60"
+    },
+    nav: {
+      padding: 0,
     }
   }
 
   return ( 
   <div>
-    <Navbar style={{margin: 0}} bg="light" expand="lg">
+    <Navbar style={styles.nav} bg="light" expand="lg">
       <Container fluid style={{backgroundColor: "#72557C"}}>
         <Navbar.Brand href="/movies" style={styles.brand}>
           <img
@@ -58,6 +66,7 @@ export default function MoviesNavbar() {
         </Navbar.Text>
       </Container>
     </Navbar>
+      <div style={styles.footer} ></div>
     <Outlet/>
   </div>
   );

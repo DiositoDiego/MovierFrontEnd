@@ -19,29 +19,47 @@ export default function Movie() {
   const styles = {
     container: {
       padding: '20px',
-      border: '1px solid #ccc'
+      backgroundColor: "#555555"
+    },
+    textColorWhite: {
+      color: "white"
     }
   }
 
   return (
-    <Container fluid style={styles.container}>
-      <Row>
-        <Col xl={3} >
-          <img src={movie.image} alt={movie.title} />
-        </Col>
-        <Col xl={5}>
-          <h2>{movie.title}</h2>
-          <p>{movie.description}</p>
-          <h4>{movie.genre}</h4>
-        </Col>
-        <Col xl={1} className="d-flex justify-content-center">
-          <div className="vertical-line" />
-        </Col>
-        <Col xl={3}>
-          <h3>Reservas</h3>
-          <p>Estatus: {movie.status}</p>
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <Container fluid style={styles.container}>
+        <Row>
+          <Col xl={4} >
+            <img src={movie.image} alt={movie.title} />
+          </Col>
+          <Col xl={5}>
+            <Row>
+              <Col>
+                <h2 style={styles.textColorWhite}>{movie.title}</h2>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <p style={styles.textColorWhite}>{movie.description}</p>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <h5 style={styles.textColorWhite}>{movie.genre}</h5>
+              </Col>
+            </Row>
+          </Col>
+          <Col xl={1} className="d-flex justify-content-center">
+            <div className="vertical-line" />
+          </Col>
+          <Col xl={2}>
+            <h3 style={styles.textColorWhite}>Reservas</h3>
+            <p style={styles.textColorWhite}>Estatus: {movie.status}</p>
+          </Col>
+        </Row>
+      </Container>
+
+    </div>
   );
 }

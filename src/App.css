@@ -1,3 +1,10 @@
+.border-error {
+  border: 1px solid red !important;
+}
+
+.message-error {
+  color: red !important;
+}
 
 .App-logo {
   height: 40vmin;

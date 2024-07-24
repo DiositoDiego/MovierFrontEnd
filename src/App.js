@@ -7,6 +7,7 @@ import SignUpForm from './components/forms/SignUpForm'
 import Navbar from './components/navigation/MoviesNavbar';
 import Movies from './views/Movies';
 import Movie from './views/Movie';
+import CompleteLoginForm from './components/forms/CompleteLoginForm';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/' element={<Navigate to="/login" />}></Route>
         <Route path='/login' element={ <LoginForm/>}></Route>
         <Route path='/signup' element={<SignUpForm/>}></Route>
+        <Route path='/complete-login' element={<CompleteLoginForm/>}></Route>
         <Route path='/movies' element={<Navbar/>}>
           <Route index element={<Movies/>}></Route>
           <Route path='m/:id' element={<Movie/>}></Route>
