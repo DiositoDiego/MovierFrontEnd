@@ -1,0 +1,58 @@
+@import '../common/MovierColors.css';
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.logo {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.1em;
+  color: white;
+  font-weight: 900;
+  letter-spacing: 4px;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.nav {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  background-color: var(--primary);
+  height: 60px;
+}
+
+.MuiSvgIcon-root {
+  color: white;
+}
+
+.MuiSvgIcon-fontSizeLarge {
+  font-size: 1.7em;
+}
+
+.MuiSvgIcon-root.search {
+  color: var(--primary);
+  margin-right: 10px;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
