@@ -18,8 +18,9 @@ export default function MoviesNavbar() {
               <p>MOVIER</p>
             </a>
           </Navbar>
-          <Form className="d-flex">
+          <Form className="form">
             <Input
+             
               placeholder="Busca películas"
               startContent={
                 <div>

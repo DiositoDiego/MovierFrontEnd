@@ -9,7 +9,10 @@ export default {
     extend: {
       margin: {
         '20px': '20px',
-      }
+      },
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
     },
   },
   darkMode: "class",

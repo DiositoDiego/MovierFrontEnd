@@ -6,8 +6,8 @@ import Swal from 'sweetalert2'
 AxiosClient.interceptors.request.use(
   (config) => {
     const authToken = localStorage.token;
-    if(Boolean(authToken)){
-      if(!config.url.includes("login") || !config.url.includes("create_user") || !config.url.includes("set_password")){
+    if (Boolean(authToken)) {
+      if (!config.url.includes("login") || !config.url.includes("create_user") || !config.url.includes("set_password") || !config.url.includes("createMovie")) {
         console.log("Estas fuera de una de las paginas de login");
         config.headers.Authorization = `Bearer ${authToken}`
       }
@@ -23,17 +23,17 @@ AxiosClient.interceptors.request.use(
 AxiosClient.interceptors.response.use(
   (response) => {
     console.log("response: ", response)
-    if(response.status && response.status >= 200){
+    if (response.status && response.status >= 200) {
       return Promise.resolve(response);
     }
   },
   (error) => {
     let errorMessage = 'Ha ocurrido un error en el servidor';
-    console.log({error});
-    if(error.response && error.response.data){
+    console.log({ error });
+    if (error.response && error.response.data) {
       errorMessage = error.response.data.error_message;
     }
-    if(errorMessage === "AuthenticationResult not in response"){
+    if (errorMessage === "AuthenticationResult not in response") {
       window.location.href = '/complete-login'
     }
     Swal.fire({
