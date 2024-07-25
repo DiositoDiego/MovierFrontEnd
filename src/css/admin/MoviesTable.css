@@ -1,0 +1,13 @@
+.MuiSvgIcon-root.edit-icon {
+  color: var(--primary);
+  margin-right: 10px;
+}
+
+.MuiSvgIcon-root.delete-icon {
+  color: var(--danger);
+}
+
+.title-movie {
+  color: var(--primary);
+  font-weight: bold;
+}
