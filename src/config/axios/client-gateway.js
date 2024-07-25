@@ -7,7 +7,9 @@ AxiosClient.interceptors.request.use(
   (config) => {
     const authToken = localStorage.token;
     if (Boolean(authToken)) {
-      if (!config.url.includes("login") || !config.url.includes("create_user") || !config.url.includes("set_password") || !config.url.includes("createMovie")) {
+      if (!config.url.includes("login") || !config.url.includes("create_user") || !config.url.includes("set_password") || !config.url.includes("createMovie") 
+        || !config.url.includes("movies_list")
+      ) {
         console.log("Estas fuera de una de las paginas de login");
         config.headers.Authorization = `Bearer ${authToken}`
       }
