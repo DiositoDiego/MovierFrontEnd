@@ -64,12 +64,44 @@ export default function CompleteLoginForm() {
     if (isUsernameValid && isPasswordValid && isConfirmPasswordValid) {
       try {
         setIsLoading(true);
-
-        //corregir y mandar el body bien
-        const response = await api.post(endpoints.SetPasswordFunction, {
-          username,
-          password,
+        console.log("entre");
+        const response = await api.doPost(endpoints.SetPasswordFunction, {
+          username: localStorage.getItem('email'),
+          temporary_password: localStorage.getItem('password'),
+          new_password: password,
         });
+        
+        if(response.status === 200){
+          Swal.fire({
+            title: "¡Éxito!",
+            text: response.data.message,
+            icon: "success",
+            confirmButtonText: "Cerrar",
+            allowEscapeKey: false,
+          }).then(async () => {
+
+            Swal.fire({
+              html: '<h3>Iniciando sesión...</h3><span class="spinner-border spinner-border-sm"></span>', 
+              showConfirmButton: false,
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            });
+
+            const responseLogin = await api.doPost(endpoints.LoginFunction, { 
+              username: localStorage.getItem('email'),
+              password: password
+            });
+            if (responseLogin.status === 200) {
+              localStorage.removeItem('email');
+              localStorage.removeItem('password');
+              localStorage.setItem("accessToken", responseLogin.data.access_token);
+              localStorage.setItem("refreshToken", responseLogin.data.refresh_token);
+              localStorage.setItem("idToken", responseLogin.data.id_token);
+              localStorage.setItem("role", responseLogin.data.role);
+              window.location.href = "/movies";
+            }
+          })
+        }
       } catch (error) {} finally {
         setIsLoading(false);
       };
@@ -145,9 +177,10 @@ export default function CompleteLoginForm() {
           - Una letra mayúscula. <br />
           - Una letra minúscula. <br />
           - Un número. <br />
+          - Un carácter especial. <br />
         </Form.Text>
         <Button className="mt-3" disabled={isLoading} style={{ width: "100%" }} type="submit">
-          {!isLoading ? "Completar registro" : <Spinner size="md" />}
+          {!isLoading ? "Completar registro" : <Spinner size="sm" />}
         </Button>
       </Form>
     </Container>

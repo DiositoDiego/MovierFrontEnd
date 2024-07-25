@@ -5,7 +5,7 @@ import Swal from 'sweetalert2'
 //interceptor para las request
 AxiosClient.interceptors.request.use(
   (config) => {
-    const authToken = localStorage.token;
+    const authToken = localStorage.getItem("");
     if (Boolean(authToken)) {
       if (!config.url.includes("login") || !config.url.includes("create_user") || !config.url.includes("set_password") || !config.url.includes("createMovie")) {
         console.log("Estas fuera de una de las paginas de login");
@@ -34,15 +34,19 @@ AxiosClient.interceptors.response.use(
       errorMessage = error.response.data.error_message;
     }
     if (errorMessage === "AuthenticationResult not in response") {
-      window.location.href = '/complete-login'
+      window.location.href = '/complete-login';
+      const config = JSON.parse(error.response.config.data);
+      localStorage.setItem('email', config.username);
+      localStorage.setItem('password', config.password);
+    } else {
+      Swal.fire({
+        title: "Ha ocurrido un error",
+        text: errorMessage,
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
+      })
+      return Promise.reject(error.response);
     }
-    Swal.fire({
-      title: "Ha ocurrido un error",
-      text: errorMessage,
-      icon: 'error',
-      confirmButtonText: 'Aceptar'
-    })
-    return Promise.reject(error.response);
   }
 )
 
