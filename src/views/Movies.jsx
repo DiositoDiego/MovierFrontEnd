@@ -3,9 +3,12 @@ import { Card, Container } from "react-bootstrap";
 import api from '../config/axios/client-gateway'
 import './styles.css'
 import { Link, useNavigate } from "react-router-dom";
+import endpoints from "../utils/endpoints";
+import Loader from "./common/Loader";
 
 export default function Movies() {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const imgSize = 300;
   const navigate = useNavigate();
 
@@ -18,51 +21,18 @@ export default function Movies() {
   }
 
   const getMovies = async () => {
-    const response = await api.doGet("/getAll");
-
-    const newMovies = [
-      {
-        id: 1,
-        title: "Movie 1",
-        description: "Description 1",
-        image: "https://picsum.photos/"+imgSize,
-        genre: "Genre 1",
-        status: "Available",
-      },
-      {
-        id: 2,
-        title: "Movie 2",
-        description: "Description 2",
-        image: "https://picsum.photos/"+imgSize,
-        genre: "Genre 2",
-        status: "Available",
-      },
-      {
-        id: 3,
-        title: "Movie 3",
-        description: "Description 3",
-        image: "https://picsum.photos/"+imgSize,
-        genre: "Genre 3",
-        status: "Available",
-      },
-      {
-        id: 4,
-        title: "Movie 4",
-        description: "Description 4",
-        image: "https://picsum.photos/"+imgSize,
-        genre: "Genre 4",
-        status: "Available",
-      },
-      {
-        id: 5,
-        title: "Movie 5",
-        description: "Description 5",
-        image: "https://picsum.photos/"+imgSize,
-        genre: "Genre 5",
-        status: "Available",
+    setIsLoading(true);
+    try {
+      const response = await api.doGet(endpoints.GetMovieFunction);
+      if(response && response.status === 200){
+        setMovies(response.data.Peliculas);
       }
-    ]
-    setMovies(newMovies);
+    } catch (error) {
+      console.log({error});
+      
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const styles = {
@@ -76,7 +46,9 @@ export default function Movies() {
     <div>
       <Container fluid className="movies-container">
         {
-          movies.map((movie) => {
+          isLoading ? <Loader /> 
+        :
+          movies.length > 0 ? movies.map((movie) => {
             return (
               <Card onClick={() => handleClick(movie.id)} key={movie.id} style={styles.card} className="movie">
                 <Card.Img variant="top" src={movie.image} />
@@ -86,7 +58,8 @@ export default function Movies() {
                 </Card.Body>
               </Card>
             )
-          })
+          }) 
+          : null
         }
       </Container>
     </div>

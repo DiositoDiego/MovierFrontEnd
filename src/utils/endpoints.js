@@ -1,26 +1,28 @@
-const WatchedMovieFunction = "https://ykhh4scjz5.execute-api.us-east-1.amazonaws.com/Prod/watched"
+const WatchedMovieFunction = "https://tvxbpcrvn8.execute-api.us-east-1.amazonaws.com/Prod/watched"
 
-const UpdateMovieFunction = "https://ztlmsmlkal.execute-api.us-east-1.amazonaws.com/Prod/update/{id}"
+const UpdateMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/update/" //id
 
-const GetCommentsFunction = "https://8gzmlje3w2.execute-api.us-east-1.amazonaws.com/Prod/getComment/{id}"
+const GetCommentsFunction = "https://k9q0jtx81f.execute-api.us-east-1.amazonaws.com/Prod/getComment/" //id
 
-const CreateMovieFunction = "https://ztlmsmlkal.execute-api.us-east-1.amazonaws.com/Prod/create"
+const CreateMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/create"
 
-const DeleteCommentFunction = "https://8gzmlje3w2.execute-api.us-east-1.amazonaws.com/Prod/delete"
+const DeleteCommentFunction = "https://k9q0jtx81f.execute-api.us-east-1.amazonaws.com/Prod/delete"
 
-const GetWatchedMovieFunction = "https://ykhh4scjz5.execute-api.us-east-1.amazonaws.com/Prod/watched/user/{id}"
+const GetWatchedMovieFunction = "https://tvxbpcrvn8.execute-api.us-east-1.amazonaws.com/Prod/watched/user/" //id
 
-const CreateUserFunction = "https://esp4ypvigi.execute-api.us-east-1.amazonaws.com/Prod/create_user"
+const CreateUserFunction = "https://rqhdzpv6rh.execute-api.us-east-1.amazonaws.com/Prod/create_user"
 
-const ChangeStatusMovieFunction = "https://ztlmsmlkal.execute-api.us-east-1.amazonaws.com/Prod/status/{id}"
+const ChangeStatusMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/status/" //id
 
-const GetMovieFunction = "https://ztlmsmlkal.execute-api.us-east-1.amazonaws.com/Prod/getAll"
+const GetMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/getAll"
 
-const SetPasswordFunction = "https://esp4ypvigi.execute-api.us-east-1.amazonaws.com/Prod/set_password"
+const GetMovieByIdFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/getMovie/" //id
 
-const LoginFunction = "https://esp4ypvigi.execute-api.us-east-1.amazonaws.com/Prod/login"
+const SetPasswordFunction = "https://rqhdzpv6rh.execute-api.us-east-1.amazonaws.com/Prod/set_password"
 
-const CreateCommentFunction = "https://8gzmlje3w2.execute-api.us-east-1.amazonaws.com/Prod/create"
+const LoginFunction = "https://rqhdzpv6rh.execute-api.us-east-1.amazonaws.com/Prod/login"
+
+const CreateCommentFunction = "https://k9q0jtx81f.execute-api.us-east-1.amazonaws.com/Prod/create"
 
 export default {
   WatchedMovieFunction,
@@ -32,6 +34,7 @@ export default {
   CreateUserFunction,
   ChangeStatusMovieFunction,
   GetMovieFunction,
+  GetMovieByIdFunction,
   SetPasswordFunction,
   LoginFunction,
   CreateCommentFunction,
