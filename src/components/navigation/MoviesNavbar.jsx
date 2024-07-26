@@ -7,7 +7,7 @@ import { Input } from "@nextui-org/react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../../css/navigation/MovierNavbar.css";
 import PersonIcon from "@mui/icons-material/Person";
-import { IconButton } from "@mui/material";
+import { Dropdown, Nav, NavDropdown } from "react-bootstrap";
 export default function MoviesNavbar() {
   return (
     <div>
@@ -20,7 +20,6 @@ export default function MoviesNavbar() {
           </Navbar>
           <Form className="form">
             <Input
-             
               placeholder="Busca películas"
               startContent={
                 <div>
@@ -30,13 +29,19 @@ export default function MoviesNavbar() {
             />
           </Form>
           <Navbar className="user">
-            <IconButton aria-label="delete">
-              <PersonIcon fontSize="large" />
-            </IconButton>
+            <Nav>
+              <NavDropdown title={
+                <>
+                  <label style={{width: '100px'}}></label>
+                  <PersonIcon fontSize="large" />
+                </>
+              } >
+                <NavDropdown.Item href="/logout">Cerrar sesión</NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
           </Navbar>
         </Container>
       </Navbar>
-      <div className="footer"></div>
       <Outlet />
     </div>
   );

@@ -43,7 +43,7 @@ export default function Movies() {
   }
 
   return (
-    <div>
+    <div className="d-flex justify-content-center">
       <Container fluid className="movies-container">
         {
           isLoading ? <Loader /> 
@@ -54,7 +54,7 @@ export default function Movies() {
                 <Card.Img variant="top" src={movie.image} />
                 <Card.Body>
                   <Card.Title>{movie.title}</Card.Title>
-                  <Card.Text>{movie.description.substring(0,5)} <Link>...más</Link> </Card.Text>
+                  <Card.Text>{movie.description.substring(0,75)} <Link>...más</Link> </Card.Text>
                 </Card.Body>
               </Card>
             )
