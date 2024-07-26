@@ -60,7 +60,13 @@ export default function LoginForm() {
       setIsLoading(true);
       try {
         const response = await api.doPost(endpoints.LoginFunction, { username: email, password: password });
-        console.log({ response });
+        if (response.status === 200) {
+          localStorage.setItem("accessToken", response.data.access_token);
+          localStorage.setItem("refreshToken", response.data.refresh_token);
+          localStorage.setItem("idToken", response.data.id_token);
+          localStorage.setItem("role", response.data.role);
+          window.location.href = "/movies";
+        }
       } catch (e) {} finally {
         setIsLoading(false);
       }
