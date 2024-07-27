@@ -3,7 +3,8 @@ import "../../css/admin/CreateMovieForm.css";
 import { Input, Textarea } from "@nextui-org/react";
 import { Button } from "@mui/material";
 import { GoBack } from "../common/GoBack";
-export const CreateMovieForm = () => {
+
+export const EditMovieForm = () => {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [image, setImage] = useState("");
@@ -47,7 +48,7 @@ export const CreateMovieForm = () => {
 
   return (
     <>
-      <h1 className="title">Crear Película</h1>
+      <h1 className="title">Editar Película</h1>
       <GoBack />
       <div className="forms">
         <Input
@@ -93,7 +94,7 @@ export const CreateMovieForm = () => {
         />
         <div className="buttons">
           <Button variant="contained" className="save" onClick={onSubmit}>
-            Crear Película
+            Actualizar Película
           </Button>
           <Button variant="contained" className="cancel" onClick={onCancel}>
             Cancelar

@@ -9,6 +9,7 @@ import CompleteLoginForm from './components/forms/CompleteLoginForm';
 import { PageNotFund } from './views/common/PageNotFund';
 import { CreateMovie } from './views/admin/CreateMovie';
 import { MoviesList } from './views/admin/MoviesList';
+import { EditMovie } from './views/admin/EditMovie';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </Route>
         <Route path='/create-movie' element={<CreateMovie />}></Route>
         <Route path='/list-movies' element={<MoviesList />}></Route>
+        <Route path='/edit-movie' element={<EditMovie />}></Route>
         <Route path='*' element={<PageNotFund />}></Route>
       </Routes>
     </div>

@@ -11,3 +11,17 @@
   color: var(--primary);
   font-weight: bold;
 }
+
+.header {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.header button {
+  margin-left: auto;
+}
+
+.MuiSvgIcon-root.add-icon {
+  color: var(--success);
+}
