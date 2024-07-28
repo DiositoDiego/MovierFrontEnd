@@ -3,12 +3,20 @@ import "../../css/admin/CreateMovieForm.css";
 import { Input, Textarea } from "@nextui-org/react";
 import { Button } from "@mui/material";
 import { GoBack } from "../common/GoBack";
+import endpoints from "../../utils/endpoints";
+import api from "../../config/axios/client-gateway";
+import genresLabel from "../../utils/genres";
+import { Select, SelectItem } from "@nextui-org/react";
+
+import Swal from "sweetalert2";
 export const CreateMovieForm = () => {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const genres = genresLabel;
 
   const validate = () => {
     const newErrors = {};
@@ -23,6 +31,27 @@ export const CreateMovieForm = () => {
     return newErrors;
   };
 
+  const createMovie = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.doPost(endpoints.CreateMovieFunction, {
+        title,
+        genre,
+        image,
+        description,
+      });
+      if (response && response.status === 200) {
+        Swal.fire("Éxito", "La película ha sido creada", "success");
+      }
+      window.location.href = "/list-movies";
+    } catch (error) {
+      console.log({ error });
+      Swal.fire("Error", error.data.message, "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleChange = (setter, field) => (event) => {
     setter(event.target.value);
     setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
@@ -33,10 +62,9 @@ export const CreateMovieForm = () => {
     const newErrors = validate();
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      console.log({ title, genre, image, description });
+      createMovie();
     }
   };
-
   const onCancel = () => {
     setTitle("");
     setGenre("");
@@ -44,7 +72,6 @@ export const CreateMovieForm = () => {
     setDescription("");
     setErrors({});
   };
-
   return (
     <>
       <h1 className="title">Crear Película</h1>
@@ -59,17 +86,26 @@ export const CreateMovieForm = () => {
           errorMessage={errors.title}
           value={title}
           onChange={handleChange(setTitle, "title")}
+          color="secondary"
         />
-        <Input
-          className="input"
-          label="Género de la película"
-          placeholder="Ingrese el género de la película"
-          labelPlacement="outside"
-          isInvalid={!!errors.genre}
-          errorMessage={errors.genre}
+       
+        <Select
+          label="Generó"
+          placeholder="Seleccione el genero de la película"
           value={genre}
           onChange={handleChange(setGenre, "genre")}
-        />
+          color="secondary"
+          isInvalid={!!errors.genre}
+          errorMessage={errors.genre}
+          fullWidth
+          className="input"
+        >
+          {genres.map((genre) => (
+            <SelectItem key={genre.key} value={genre.value}>
+              {genre.value}
+            </SelectItem>
+          ))}
+        </Select>
         <Input
           className="input"
           label="Imagen de la película"
@@ -79,6 +115,7 @@ export const CreateMovieForm = () => {
           errorMessage={errors.image}
           value={image}
           onChange={handleChange(setImage, "image")}
+          color="secondary"
         />
         <Textarea
           className="textarea"
@@ -90,10 +127,16 @@ export const CreateMovieForm = () => {
           errorMessage={errors.description}
           value={description}
           onChange={handleChange(setDescription, "description")}
+          color="secondary"
         />
         <div className="buttons">
-          <Button variant="contained" className="save" onClick={onSubmit}>
-            Crear Película
+          <Button
+            variant="contained"
+            className="save"
+            onClick={onSubmit}
+            disabled={isLoading}
+          >
+            {isLoading ? "Creando..." : "Crear Película"}
           </Button>
           <Button variant="contained" className="cancel" onClick={onCancel}>
             Cancelar
