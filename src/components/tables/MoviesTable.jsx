@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -7,6 +7,8 @@ import {
   TableRow,
   TableCell,
   Chip,
+  Spinner,
+  Pagination,
 } from "@nextui-org/react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button, IconButton } from "@mui/material";
@@ -15,66 +17,54 @@ import "../../css/admin/MoviesTable.css";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import endpoints from "../../utils/endpoints";
+import api from "../../config/axios/client-gateway";
 import DoneIcon from "@mui/icons-material/Done";
-const rows = [
-  {
-    key: "1",
-    image:
-      "https://cdn.apis.cineplanet.cl/CDN/media/entity/get/FilmPosterGraphic/HO00001232?referenceScheme=HeadOffice&allowPlaceHolder=true",
-    title: "Bad Boys",
-    genre: "Acción",
-    description: "Dos hombres en acción",
-    status: 1,
-  },
-  {
-    key: "2",
-    image: "https://lumiere-a.akamaihd.net/v1/images/image_26964b90.jpeg",
-    title: "Intensa Mente",
-    genre: "Drama",
-    description: "Niña con emociones fuertes",
-    status: 0,
-  },
-];
-
-const columns = [
-  {
-    key: "image",
-    label: "Portada",
-  },
-  {
-    key: "title",
-    label: "Título",
-  },
-  {
-    key: "genre",
-    label: "Género",
-  },
-  {
-    key: "description",
-    label: "Descripción",
-  },
-  {
-    key: "status",
-    label: "Estado",
-  },
-  {
-    key: "actions",
-    label: "Acciones",
-  },
-];
+import columsTable from "../../utils/colums";
 
 export const MoviesTable = () => {
   const navigate = useNavigate();
+  const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = React.useState(1);
+  const rowsPerPage = 7;
+  const pages = Math.ceil(movies.length / rowsPerPage);
+  const columns = columsTable;
+
+  const items = React.useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return movies.slice(start, end);
+  }, [page, movies]);
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  const getMovies = async () => {
+    setIsLoading(true);
+    try {
+      const response = await api.doGet(endpoints.GetAllMoviesFunction);
+      if (response && response.status === 200) {
+        setMovies(response.data.Peliculas);
+      }
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const onAddMovie = () => {
     navigate("/create-movie");
   };
 
-  const onEditMovie = () => {
-    navigate("/edit-movie");
+  const onEditMovie = (id) => {
+    navigate(`/edit-movie/${id}`);
   };
 
-  const onDeleteMovie = () => {
+  const onDeleteMovie = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "vas a desactivar la película",
@@ -91,7 +81,7 @@ export const MoviesTable = () => {
     });
   };
 
-  const onActivateMovie = () => {
+  const onActivateMovie = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "vas a activar la película",
@@ -122,16 +112,22 @@ export const MoviesTable = () => {
     if (key === "actions") {
       return (
         <>
-          <IconButton aria-label="edit" onClick={onEditMovie}>
+          <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)}>
             <EditIcon className="edit-icon" />
           </IconButton>
 
           {item.status === 1 ? (
-            <IconButton aria-label="delete" onClick={onDeleteMovie}>
+            <IconButton
+              aria-label="delete"
+              onClick={() => onDeleteMovie(item.id)}
+            >
               <DeleteIcon className="delete-icon" color="error" />
             </IconButton>
           ) : (
-            <IconButton aria-label="activate" onClick={onActivateMovie}>
+            <IconButton
+              aria-label="activate"
+              onClick={() => onActivateMovie(item.id)}
+            >
               <DoneIcon className="add-icon" />
             </IconButton>
           )}
@@ -157,15 +153,38 @@ export const MoviesTable = () => {
           Agregar película
         </Button>
       </div>
-      <Table aria-label="Example table with dynamic content">
+
+      <Table
+        aria-label="Tabla de películas"
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              color="secondary"
+              page={page}
+              total={pages}
+              onChange={(page) => setPage(page)}
+            />
+          </div>
+        }
+      >
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody items={rows}>
+
+        <TableBody
+          items={items}
+          isLoading={isLoading}
+          loadingContent={
+            <Spinner color="secondary" label="Cargando películas..." />
+          }
+        >
           {(item) => (
-            <TableRow key={item.key}>
+            <TableRow key={item.id}>
               {(columnKey) => (
                 <TableCell>{getKeyValue(item, columnKey)}</TableCell>
               )}
