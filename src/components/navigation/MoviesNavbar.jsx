@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "../../css/navigation/MovierNavbar.css";
 import PersonIcon from "@mui/icons-material/Person";
 import { IconButton } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 export default function MoviesNavbar() {
   return (
     <div>
@@ -20,7 +21,6 @@ export default function MoviesNavbar() {
           </Navbar>
           <Form className="form">
             <Input
-             
               placeholder="Busca películas"
               startContent={
                 <div>
@@ -32,6 +32,9 @@ export default function MoviesNavbar() {
           <Navbar className="user">
             <IconButton aria-label="delete">
               <PersonIcon fontSize="large" />
+            </IconButton>
+            <IconButton aria-label="delete">
+              <LogoutIcon fontSize="large" />
             </IconButton>
           </Navbar>
         </Container>
