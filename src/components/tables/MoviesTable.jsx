@@ -61,7 +61,8 @@ export const MoviesTable = () => {
   };
 
   const onEditMovie = (id) => {
-    navigate(`/edit-movie/${id}`);
+    navigate(`/edit-movie`);
+    localStorage.setItem("idMovie", id);
   };
 
   const onDeleteMovie = (id) => {
@@ -76,7 +77,19 @@ export const MoviesTable = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Eliminado", "La película ha sido desactivada", "success");
+        api.doPatch(endpoints.ChangeStatusMovieFunction+id)
+            .then((response) => {
+              if (response && response.status === 200) {
+                Swal.fire("Desactivada", "La película ha sido desactivada", "success");
+                getMovies();
+              } else {
+                Swal.fire("Error", "No se pudo desactivar la película", "error");
+              }
+            })
+            .catch((error) => {
+              console.error("Error desactivando la película:", error);
+              Swal.fire("Error", "Ocurrió un error al desactivar la película", "error");
+            });
       }
     });
   };
@@ -84,7 +97,7 @@ export const MoviesTable = () => {
   const onActivateMovie = (id) => {
     Swal.fire({
       title: "¿Estás seguro?",
-      text: "vas a activar la película",
+      text: "Vas a activar la película",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#72557C",
@@ -93,10 +106,23 @@ export const MoviesTable = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Activada", "La película ha sido activada", "success");
+        api.doPatch(endpoints.ChangeStatusMovieFunction+id)
+            .then((response) => {
+              if (response && response.status === 200) {
+                Swal.fire("Activada", "La película ha sido activada", "success");
+                getMovies();
+              } else {
+                Swal.fire("Error", "No se pudo activar la película", "error");
+              }
+            })
+            .catch((error) => {
+              console.error("Error activando la película:", error);
+              Swal.fire("Error", "Ocurrió un error al activar la película", "error");
+            });
       }
     });
   };
+
 
   const getKeyValue = (item, key) => {
     if (key === "image") {
