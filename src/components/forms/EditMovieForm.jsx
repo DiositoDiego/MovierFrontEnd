@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import "../../css/admin/CreateMovieForm.css";
-import { Input, Textarea } from "@nextui-org/react";
+import {Input, Spinner, Textarea} from "@nextui-org/react";
 import { Button } from "@mui/material";
 import { GoBack } from "../common/GoBack";
 import api from "../../config/axios/client-gateway";
@@ -27,7 +27,7 @@ export const EditMovieForm = () => {
     let id = localStorage.getItem("idMovie");
     console.log(id);
     try {
-      const response = await api.doGet(endpoints.GetMovieFunction+id);
+      const response = await api.doGet(endpoints.GetMovieByIdFunction+id);
       if (response && response.status === 200) {
         setTitle(response.data.Pelicula.title);
         setGenre(response.data.Pelicula.genre);
@@ -58,7 +58,7 @@ export const EditMovieForm = () => {
     setIsLoading(true);
     let id = localStorage.getItem("idMovie");
     try {
-      const response = await api.doPost(endpoints.UpdateMovieFunction+id, {
+      const response = await api.doPut(endpoints.UpdateMovieFunction+id, {
         title,
         description,
         genre,
@@ -106,7 +106,12 @@ export const EditMovieForm = () => {
     <>
       <h1 className="title">Actualizar Película</h1>
       <GoBack />
-      <div className="forms">
+      {isLoading ? (
+          <div className="loading">
+            <Spinner color="secondary" label="Cargando información..." />
+          </div>
+      ) : (
+          <div className="forms">
         <Input
           className="input"
           label="Título de la película"
@@ -162,6 +167,7 @@ export const EditMovieForm = () => {
           </Button>
         </div>
       </div>
+      )}
     </>
   );
 };

@@ -138,10 +138,15 @@ export const MoviesTable = () => {
     if (key === "actions") {
       return (
         <>
-          <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)}>
-            <EditIcon className="edit-icon" />
-          </IconButton>
-
+          {item.status === 1 ? (
+              <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)}>
+                <EditIcon className="edit-icon" />
+              </IconButton>
+            ) : (
+                <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)} disabled>
+                    <EditIcon className="edit-icon" />
+                </IconButton>
+          )}
           {item.status === 1 ? (
             <IconButton
               aria-label="delete"
