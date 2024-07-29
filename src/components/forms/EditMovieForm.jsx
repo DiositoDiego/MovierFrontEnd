@@ -1,22 +1,45 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "../../css/admin/CreateMovieForm.css";
-import { Input, Textarea } from "@nextui-org/react";
+import {Input, Spinner, Textarea} from "@nextui-org/react";
 import { Button } from "@mui/material";
 import { GoBack } from "../common/GoBack";
-import endpoints from "../../utils/endpoints";
 import api from "../../config/axios/client-gateway";
-import genresLabel from "../../utils/genres";
-import { Select, SelectItem } from "@nextui-org/react";
-
+import endpoints from "../../utils/endpoints";
 import Swal from "sweetalert2";
-export const CreateMovieForm = () => {
+import {useNavigate} from "react-router-dom";
+
+export const EditMovieForm = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const genres = genresLabel;
+
+  useEffect(() => {
+    getMovie();
+  }, []);
+
+  const getMovie = async () => {
+    setIsLoading(true);
+    console.log(localStorage);
+    let id = localStorage.getItem("idMovie");
+    console.log(id);
+    try {
+      const response = await api.doGet(endpoints.GetMovieByIdFunction+id);
+      if (response && response.status === 200) {
+        setTitle(response.data.Pelicula.title);
+        setGenre(response.data.Pelicula.genre);
+        setImage(response.data.Pelicula.image);
+        setDescription(response.data.Pelicula.description);
+      }
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const validate = () => {
     const newErrors = {};
@@ -31,19 +54,21 @@ export const CreateMovieForm = () => {
     return newErrors;
   };
 
-  const createMovie = async () => {
+  const UpdateMovie = async () => {
     setIsLoading(true);
+    let id = localStorage.getItem("idMovie");
     try {
-      const response = await api.doPost(endpoints.CreateMovieFunction, {
+      const response = await api.doPut(endpoints.UpdateMovieFunction+id, {
         title,
-        genre,
-        image,
         description,
+        genre,
+        image
       });
       if (response && response.status === 200) {
-        Swal.fire("Éxito", "La película ha sido creada", "success");
+        Swal.fire("Éxito", "La película ha sido actualizada", "success");
+        window.location.href = "/list-movies";
+        localStorage.removeItem("idMovie");
       }
-      window.location.href = "/list-movies";
     } catch (error) {
       console.log({ error });
       Swal.fire("Error", error.data.message, "error");
@@ -62,21 +87,31 @@ export const CreateMovieForm = () => {
     const newErrors = validate();
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      createMovie();
+      console.log({ title, genre, image, description });
+      UpdateMovie();
     }
   };
+
   const onCancel = () => {
     setTitle("");
     setGenre("");
     setImage("");
     setDescription("");
     setErrors({});
+    navigate("/list-movies");
+    localStorage.removeItem("idMovie");
   };
+
   return (
     <>
-      <h1 className="title">Crear Película</h1>
+      <h1 className="title">Actualizar Película</h1>
       <GoBack />
-      <div className="forms">
+      {isLoading ? (
+          <div className="loading">
+            <Spinner color="secondary" label="Cargando información..." />
+          </div>
+      ) : (
+          <div className="forms">
         <Input
           className="input"
           label="Título de la película"
@@ -86,26 +121,17 @@ export const CreateMovieForm = () => {
           errorMessage={errors.title}
           value={title}
           onChange={handleChange(setTitle, "title")}
-          color="secondary"
         />
-       
-        <Select
-          label="Generó"
-          placeholder="Seleccione el genero de la película"
-          value={genre}
-          onChange={handleChange(setGenre, "genre")}
-          color="secondary"
+        <Input
+          className="input"
+          label="Género de la película"
+          placeholder="Ingrese el género de la película"
+          labelPlacement="outside"
           isInvalid={!!errors.genre}
           errorMessage={errors.genre}
-          fullWidth
-          className="input"
-        >
-          {genres.map((genre) => (
-            <SelectItem key={genre.key} value={genre.value}>
-              {genre.value}
-            </SelectItem>
-          ))}
-        </Select>
+          value={genre}
+          onChange={handleChange(setGenre, "genre")}
+        />
         <Input
           className="input"
           label="Imagen de la película"
@@ -115,7 +141,6 @@ export const CreateMovieForm = () => {
           errorMessage={errors.image}
           value={image}
           onChange={handleChange(setImage, "image")}
-          color="secondary"
         />
         <Textarea
           className="textarea"
@@ -127,22 +152,22 @@ export const CreateMovieForm = () => {
           errorMessage={errors.description}
           value={description}
           onChange={handleChange(setDescription, "description")}
-          color="secondary"
         />
         <div className="buttons">
           <Button
-            variant="contained"
-            className="save"
-            onClick={onSubmit}
-            disabled={isLoading}
+              variant="contained"
+              className="save"
+              onClick={onSubmit}
+              disabled={isLoading}
           >
-            {isLoading ? "Creando..." : "Crear Película"}
+            {isLoading ? "Actualizando..." : "Actualizar Película"}
           </Button>
           <Button variant="contained" className="cancel" onClick={onCancel}>
             Cancelar
           </Button>
         </div>
       </div>
+      )}
     </>
   );
 };

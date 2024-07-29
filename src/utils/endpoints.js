@@ -14,7 +14,7 @@ const CreateUserFunction = "https://rqhdzpv6rh.execute-api.us-east-1.amazonaws.c
 
 const ChangeStatusMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/status/" //id
 
-const GetMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/getAll"
+const GetMovieFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/getAll" //Esta trae status 1 
 
 const GetMovieByIdFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/getMovie/" //id
 
@@ -23,6 +23,8 @@ const SetPasswordFunction = "https://rqhdzpv6rh.execute-api.us-east-1.amazonaws.
 const LoginFunction = "https://rqhdzpv6rh.execute-api.us-east-1.amazonaws.com/Prod/login"
 
 const CreateCommentFunction = "https://k9q0jtx81f.execute-api.us-east-1.amazonaws.com/Prod/create"
+
+const GetAllMoviesFunction = "https://ef1df7bdn9.execute-api.us-east-1.amazonaws.com/Prod/getAllMovies" //Esta trae status 0 y 1 
 
 export default {
   WatchedMovieFunction,
@@ -38,4 +40,5 @@ export default {
   SetPasswordFunction,
   LoginFunction,
   CreateCommentFunction,
+  GetAllMoviesFunction
 }
