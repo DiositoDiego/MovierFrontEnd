@@ -6,7 +6,7 @@ export default function Comment(props) {
   const { comment, date, user } = props;
 
   return (
-  <Container>
+  <Container className="mb-3">
     <Card>
       <Card.Body>
         <div className="d-flex justify-content-between">

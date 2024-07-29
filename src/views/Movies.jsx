@@ -50,11 +50,19 @@ export default function Movies() {
         :
           movies.length > 0 ? movies.map((movie) => {
             return (
-              <Card onClick={() => handleClick(movie.id)} key={movie.id} style={styles.card} className="movie">
+              <Card onClick={() => handleClick(movie.id)} key={movie.id} style={styles.card} className="movie" title={movie.title}>
                 <Card.Img variant="top" src={movie.image} />
                 <Card.Body>
                   <Card.Title>{movie.title}</Card.Title>
-                  <Card.Text>{movie.description.substring(0,75)} <Link>...más</Link> </Card.Text>
+                  <Card.Text>
+                    {movie.description.length > 75 ? (
+                      <>
+                        {movie.description.substring(0, 75)} <span style={{ color: 'blue', textDecoration: 'underline', cursor: 'pointer' }} onClick={(e) => e.preventDefault()} > ...más </span>
+                      </>
+                    ) : (
+                      movie.description
+                    )}
+                  </Card.Text>
                 </Card.Body>
               </Card>
             )
