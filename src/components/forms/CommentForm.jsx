@@ -14,10 +14,12 @@ export default function CommentForm(props) {
   useEffect(() => {
     if (isSubmitted) {
       setIsValidComment(comment.trim() !== '');
+      console.log({ isSubmitted });
     }
   }, [comment, isSubmitted]);
 
   const handleSubmit = async (e) => {
+    console.log("Entré", {isSubmitted});
     e.preventDefault();
     if(!isSubmitted){
       setIsSubmitted(true);
@@ -34,6 +36,9 @@ export default function CommentForm(props) {
             comment: comment,
           });
           if(response && response.status === 200){
+            setComment('');
+            setIsSubmitted(false);
+            setIsValidComment(true);
             Swal.fire({
               title: '¡Comentario publicado!',
               text: 'Gracias por tu comentario.',
@@ -41,12 +46,10 @@ export default function CommentForm(props) {
               confirmButtonText: 'Aceptar',
             });
             await props.fetchComments(props.idMovie);
-            setIsSubmitted(false);
-            setComment('');
-            setIsValidComment(true);
           }
         }catch(error) {} finally {
           setIsLoading(false);
+          setIsSubmitted(false);
         }
       }
     }
@@ -74,6 +77,8 @@ export default function CommentForm(props) {
             onChange={(e) => setComment(e.target.value)}
             onKeyDown={handleKeyDown}
             className={isValidComment ? '' : 'border-error'}
+            disabled={isLoading}
+            style={{ resize: 'none' }}
           />
           <div className='d-flex justify-content-between'>
             <div>

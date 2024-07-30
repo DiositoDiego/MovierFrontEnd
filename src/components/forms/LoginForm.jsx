@@ -7,9 +7,11 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import "../../css/auth/Login.css";
 import { Button } from "@mui/material";
 import { Input } from "@nextui-org/react";
+import { useSearchParams } from "react-router-dom";
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
+  const searchParams = useSearchParams();
+  const [email, setEmail] = useState(searchParams[0].get("email") || '');
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -49,8 +51,6 @@ export default function LoginForm() {
           localStorage.setItem("role", response.data.role);
           localStorage.setItem("userId", response.data.id);
           window.location.href = "/movies";
-        } else {
-          setErrors({ form: "Error en el inicio de sesión" });
         }
       } catch (e) {
         setErrors({ form: "Error en el inicio de sesión" });

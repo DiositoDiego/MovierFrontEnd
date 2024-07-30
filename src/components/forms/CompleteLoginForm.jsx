@@ -98,6 +98,7 @@ export default function CompleteLoginForm() {
               localStorage.setItem("refreshToken", responseLogin.data.refresh_token);
               localStorage.setItem("idToken", responseLogin.data.id_token);
               localStorage.setItem("role", responseLogin.data.role);
+              localStorage.setItem("userId", response.data.id);
               window.location.href = "/movies";
             }
           })

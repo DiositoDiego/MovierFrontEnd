@@ -40,18 +40,20 @@ export default function SignUpForm() {
           user_name: email,
         });
 
-        Swal.fire({
-          title: "¡Éxito!",
-          text: "Se ha enviado un email con una contraseña temporal, por favor inicia sesión para completar el registro.",
-          icon: "success",
-          confirmButtonText: "Ir a inicio de sesión",
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          showConfirmButton: true,
-          focusConfirm: true,
-        }).then(() => {
-          window.location.href = "/login";
-        });
+        if(response.status === 200) {
+          Swal.fire({
+            title: "¡Éxito!",
+            text: "Se ha enviado un email con una contraseña temporal, por favor inicia sesión para completar el registro.",
+            icon: "success",
+            confirmButtonText: "Ir a inicio de sesión",
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            showConfirmButton: true,
+            focusConfirm: true,
+          }).then(() => {
+            window.location.href = `/login?email=${email}`;
+          });
+        }
       } catch (e) {
         setErrors({ form: "Error en el registro" });
       } finally {
@@ -93,7 +95,7 @@ export default function SignUpForm() {
         </Form>
         <div className="create-account">
           <p className="text-account">
-            ¿Ya tienes una cuenta? <a href="/signup">Inicia sesión aquí</a>
+            ¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a>
           </p>
         </div>
       </Container>

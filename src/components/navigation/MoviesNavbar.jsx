@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
@@ -34,7 +34,9 @@ export default function MoviesNavbar() {
               <PersonIcon fontSize="large" />
             </IconButton>
             <IconButton aria-label="delete">
-              <LogoutIcon fontSize="large" />
+              <Link to="/logout">
+                <LogoutIcon fontSize="large" />
+              </Link>
             </IconButton>
           </Navbar>
         </Container>

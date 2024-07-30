@@ -13,7 +13,7 @@ export default function Comment(props) {
           <Card.Title>{user}</Card.Title>
           <div className="text-end w-100">
             <small className="text-muted">
-              Fecha de creación: {new Date(date).toLocaleString()}
+              Fecha de publicación: {new Date(date).toLocaleString()}
             </small>
           </div>
         </div>
