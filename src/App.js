@@ -19,7 +19,7 @@ function App() {
         <Route path='/login' element={<LoginForm />}></Route>
         <Route path='/signup' element={<SignUpForm />}></Route>
         <Route path='/complete-login' element={<CompleteLoginForm />}></Route>
-        <Route path='/movies' element={<Navbar />}>
+        <Route path='/movies'>
           <Route index element={<Movies />}></Route>
           <Route path='m/:id' element={<Movie />}></Route>
         </Route>
