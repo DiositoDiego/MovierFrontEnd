@@ -60,12 +60,12 @@ export default function CommentForm(props) {
 
   return (
     <div>
-      <div className='text-center mb-3'>
-        <h4>Escribe tu comentario acerca de esta película</h4>
+      <div className="text-center mb-3">
+        <h4>Escribe tu comentario acerca de esta pelí­cula</h4>
       </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Control 
+          <Form.Control
             as="textarea"
             placeholder="Comentar..."
             rows={props.rows || defaultRows}
@@ -79,7 +79,7 @@ export default function CommentForm(props) {
             <div>
               {isSubmitted && !isValidComment && (
                 <Form.Text className="message-error">
-                  El comentario no puede estar vacío.
+                  El comentario no puede estar vací­o.
                 </Form.Text>
               )}
             </div>

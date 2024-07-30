@@ -7,7 +7,8 @@ import { Input } from "@nextui-org/react";
 import SearchIcon from "@mui/icons-material/Search";
 import "../../css/navigation/MovierNavbar.css";
 import PersonIcon from "@mui/icons-material/Person";
-import { Dropdown, Nav, NavDropdown } from "react-bootstrap";
+import { IconButton } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 export default function MoviesNavbar() {
   return (
     <div>
@@ -29,16 +30,12 @@ export default function MoviesNavbar() {
             />
           </Form>
           <Navbar className="user">
-            <Nav>
-              <NavDropdown title={
-                <>
-                  <label style={{width: '100px'}}></label>
-                  <PersonIcon fontSize="large" />
-                </>
-              } >
-                <NavDropdown.Item href="/logout">Cerrar sesión</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
+            <IconButton aria-label="delete">
+              <PersonIcon fontSize="large" />
+            </IconButton>
+            <IconButton aria-label="delete">
+              <LogoutIcon fontSize="large" />
+            </IconButton>
           </Navbar>
         </Container>
       </Navbar>

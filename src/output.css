@@ -3242,7 +3242,7 @@ video {
   --nextui-foreground-800: 240 4.76% 95.88%;
   --nextui-foreground-900: 0 0% 98.04%;
   --nextui-foreground: 210 5.56% 92.94%;
-  --nextui-focus: 212.01999999999998 100% 46.67%;
+  --nextui-focus: 0 0% 100%;
   --nextui-overlay: 0 0% 0%;
   --nextui-divider: 0 0% 100%;
   --nextui-divider-opacity: 0.15;
@@ -3265,7 +3265,7 @@ video {
   --nextui-default-800: 240 4.76% 95.88%;
   --nextui-default-900: 0 0% 98.04%;
   --nextui-default-foreground: 0 0% 100%;
-  --nextui-default: 240 5.26% 26.08%;
+  --nextui-default: 0 0% 0%;
   --nextui-primary-50: 211.84000000000003 100% 9.61%;
   --nextui-primary-100: 211.84000000000003 100% 19.22%;
   --nextui-primary-200: 212.24 100% 28.82%;
@@ -3277,7 +3277,8 @@ video {
   --nextui-primary-800: 211.84000000000003 92.45% 89.61%;
   --nextui-primary-900: 212.5 92.31% 94.9%;
   --nextui-primary-foreground: 0 0% 100%;
-  --nextui-primary: 212.01999999999998 100% 46.67%;
+  --nextui-primary: 338.69000000000005 100% 48.04%;
+  --nextui-primary-focus: 339.5799999999999 100% 62.55%;
   --nextui-secondary-50: 270 66.67% 9.41%;
   --nextui-secondary-100: 270 66.67% 18.82%;
   --nextui-secondary-200: 270 66.67% 28.24%;

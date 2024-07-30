@@ -10,6 +10,11 @@
   --background-light: #FFFFFF;
   --background-dark: #C2C2C2;
 
+  --danger: #ff5050;
+  --warning: #ffcc00;
+  --success: #00cc00;
+  --info: #0099ff;
+  
 
  
 }
