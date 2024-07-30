@@ -8,6 +8,7 @@ import Movie from './views/Movie';
 import CompleteLoginForm from './components/forms/CompleteLoginForm';
 import { PageNotFund } from './views/common/PageNotFund';
 import { CreateMovie } from './views/admin/CreateMovie';
+import Logout from './components/forms/Logout';
 import { MoviesList } from './views/admin/MoviesList';
 import { EditMovie } from './views/admin/EditMovie';
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/login' element={<LoginForm />}></Route>
         <Route path='/signup' element={<SignUpForm />}></Route>
         <Route path='/complete-login' element={<CompleteLoginForm />}></Route>
+        <Route path='/logout' element={<Logout/>}></Route>
         <Route path='/movies'>
           <Route index element={<Movies />}></Route>
           <Route path='m/:id' element={<Movie />}></Route>

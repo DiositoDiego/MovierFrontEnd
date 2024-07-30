@@ -39,7 +39,6 @@ export default function MoviesNavbar() {
           </Navbar>
         </Container>
       </Navbar>
-      <div className="footer"></div>
       <Outlet />
     </div>
   );

@@ -47,6 +47,7 @@ export default function LoginForm() {
           localStorage.setItem("refreshToken", response.data.refresh_token);
           localStorage.setItem("idToken", response.data.id_token);
           localStorage.setItem("role", response.data.role);
+          localStorage.setItem("userId", response.data.id);
           window.location.href = "/movies";
         } else {
           setErrors({ form: "Error en el inicio de sesión" });

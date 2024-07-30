@@ -31,7 +31,7 @@ AxiosClient.interceptors.response.use(
     
     let errorMessage = 'Ha ocurrido un error en el servidor';
     if (error.response && error.response.data) {
-      errorMessage = error.response.data.error_message;
+      errorMessage = error.response.data.error_message || error.response.data.message;
     }
     if (errorMessage === "AuthenticationResult not in response") {
       window.location.href = '/complete-login';
