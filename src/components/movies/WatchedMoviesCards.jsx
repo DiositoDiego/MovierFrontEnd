@@ -15,7 +15,7 @@ import {
 import { Button, CardMedia } from "@mui/material";
 import "../../css/movies/movies.css";
 
-export default function MoviesCards() {
+export default function WatchedMoviesCards() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const imgSize = 300;
@@ -45,7 +45,7 @@ export default function MoviesCards() {
 
   return (
     <>
-      <h1 className="title">Catalogo de películas</h1>
+      <h1 className="title">Tus películas vistas</h1>
 
       <Container fluid className="movies-container">
         {isLoading ? (

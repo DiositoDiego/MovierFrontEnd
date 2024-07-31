@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import "../../css/navigation/MovierNavbar.css";
 import PersonIcon from "@mui/icons-material/Person";
 import { IconButton } from "@mui/material";
+import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import LogoutIcon from "@mui/icons-material/Logout";
 export default function MoviesNavbar() {
   return (
@@ -30,6 +31,11 @@ export default function MoviesNavbar() {
             />
           </Form>
           <Navbar className="user">
+            <IconButton aria-label="delete">
+              <Link to="/movies/watched">
+                <MovieFilterIcon fontSize="large" />
+              </Link>
+            </IconButton>
             <IconButton aria-label="delete">
               <PersonIcon fontSize="large" />
             </IconButton>
