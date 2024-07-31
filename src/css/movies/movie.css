@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+.mainContainer {
+  padding: 20px;
+  background-color: var(--primary);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.img {
+  height: auto;
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.textColorWhite {
+  color: white;
+
+}
+
+.title-movie-2{
+  letter-spacing: 3px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 900;
+  color: white;
+  
+  
+
+}
+
+.Col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.commentContainer {
+  width: 100%;
+}
+
+.vertical-line {
+  border-left: 1px solid white;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+
+  .commentContainer {
+    width: 100%;
+  }
+
+  .Col {
+    max-height: none;
+  }
+}
+
+h2,
+h3,
+h5 {
+  margin-bottom: 10px;
+
+}
+
+p {
+  margin-bottom: 15px;
+}
+
+.comment {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+ 
+}
+
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.button-movie{
+  background-color: white;
+  color: var(--primary);
+  font-family: 'Poppins', sans-serif;
+  padding: 10px 20px;
+  border-radius: 10px;
+}

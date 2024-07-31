@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Col, Container, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import './styles.css'
+import "../css/movies/movie.css";
 import CommentForm from "../components/forms/CommentForm";
 import Comment from "../components/misc/Comment";
 import api from "../config/axios/client-gateway";
 import endpoints from "../utils/endpoints";
 import Loader from "./common/Loader";
+import { Chip } from "@nextui-org/react";
+import { Button } from "@mui/material";
+import MoviesNavbar from "../components/navigation/MoviesNavbar";
 
 export default function Movie() {
-  
   const { id } = useParams();
 
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState([]);
   const [movie, setMovie] = useState({});
   const [isMovieLoading, setIsMovieLoading] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
@@ -20,113 +22,128 @@ export default function Movie() {
   useEffect(() => {
     fetchMovie(id);
     fetchComments(id);
-  }, []);
+  }, [id]);
 
   const fetchMovie = async (id) => {
     try {
       setIsMovieLoading(true);
-      const response = await api.doGet(endpoints.GetMovieByIdFunction+id);
-      if(response && response.status === 200){
+      const response = await api.doGet(endpoints.GetMovieByIdFunction + id);
+      if (response && response.status === 200) {
         setMovie(response.data.Pelicula);
       }
-    } catch (error) {} finally {
+    } catch (error) {
+      console.error("Error fetching movie:", error);
+    } finally {
       setIsMovieLoading(false);
     }
-  }
+  };
 
   const fetchComments = async (id) => {
     try {
       setIsCommentsLoading(true);
-      const response = await api.doGet(endpoints.GetCommentsFunction+id);
-      if(response && response.status === 200){
+      const response = await api.doGet(endpoints.GetCommentsFunction + id);
+      if (response && response.status === 200) {
         setComments(response.data.Comentarios);
       }
-    } catch (error) {} finally {
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    } finally {
       setIsCommentsLoading(false);
     }
-  }
-
-  const styles = {
-    mainContainer: {
-      padding: '20px',
-      backgroundColor: "#555555"
-    },
-    commentContainer: {
-      width: '35%',
-    },
-    textColorWhite: {
-      color: "white"
-    },
-    Col: {
-      maxHeight: '450px',
-      display: 'flex',
-      justifyContent: 'center'
-    },
-    img: {
-      height: '100%',
-      width: 'auto',
-    }
-  }
+  };
 
   return (
     <div>
-      { !isMovieLoading  ?
+      {isMovieLoading ? (
+        <div className="loader-container">
+          <Loader />
+        </div>
+      ) : (
         <div>
-          <Container fluid style={styles.mainContainer}>
+          <MoviesNavbar />
+          <Container fluid className="mainContainer">
             <Row>
-              <Col xl={4} style={styles.Col} >
-                <img src={movie.image || ''} style={styles.img}/>
+              <Col xl={4} className="Col">
+                <img
+                  src={movie.image || ""}
+                  className="img"
+                  alt={movie.title}
+                />
               </Col>
               <Col xl={5} className="d-flex flex-column">
                 <Row>
                   <Col>
-                    <h2 style={styles.textColorWhite}>{movie.title}</h2>
+                    <h1 className="textColorWhite title-movie-2">
+                      {movie.title}
+                    </h1>
                   </Col>
                 </Row>
                 <Row>
                   <Col>
-                    <p style={styles.textColorWhite}>{movie.description}</p>
+                    <p className="textColorWhite">{movie.description}</p>
                   </Col>
                 </Row>
-                <Row className="align-self-end" >
+                <Row className="align-self-end">
                   <Col>
-                    <h5 style={styles.textColorWhite}>Género: {movie.genre}</h5>
+                    <h5 className="textColorWhite">Género: {movie.genre}</h5>
                   </Col>
                 </Row>
+                <Col>
+                  <Button className="button-movie" variant="contained">Marcar como vista</Button>
+                </Col>
               </Col>
               <Col xl={1} className="d-flex justify-content-center">
                 <div className="vertical-line" />
               </Col>
               <Col xl={2}>
-                <h3 style={styles.textColorWhite}>Reservas</h3>
-                <p style={styles.textColorWhite}>Estatus: {movie.status}</p>
+                <h3 className="textColorWhite mr-2">Estado</h3>
+                <Chip color={movie.status === 1 ? "primary" : "error"}>
+                  {movie.status === 1 ? "Activa" : "Inactiva"}
+                </Chip>
+                {/* AQUI CAMBIAR POR EL ESTADO DEL GET WATCHED */}
+                <Chip
+                  className="mx-2"
+                  color={movie.status === 1 ? "primary" : "error"}
+                >
+                  {movie.status === 1 ? "Vista" : "No vista"}
+                </Chip>
               </Col>
             </Row>
           </Container>
-          <Container className="mt-5" style={styles.commentContainer}>
+          <hr />
+
+          <Container className="mt-5 commentContainer">
             <CommentForm rows={4} fetchComments={fetchComments} idMovie={id} />
           </Container>
           <hr />
-            <Container className="mb-5" fluid>
-              { !isCommentsLoading ?
-                <div>
-                  { comments && comments.length > 0 ? comments.map((m) => {
-                      return <div key={m.comment_id}><Comment comment={m.comment} date={m.date} user={m.username} /></div>
-                    }) : <Alert variant="warning">No hay comentarios disponibles.</Alert>
-                  }
-                </div>
-                :
-                <div className="w-100 d-flex justify-content-center">
-                  <Spinner size="md" />
-                </div>
-              }
-            </Container>
+          <Container className="mb-5" fluid>
+            {isCommentsLoading ? (
+              <div className="w-100 d-flex justify-content-center">
+                <Spinner size="md" />
+              </div>
+            ) : (
+              <div>
+                <h2 className="text-center mb-3 comment-title">Comentarios</h2>
+                {comments && comments.length > 0 ? (
+                  comments.map((m) => (
+                    <div key={m.comment_id}>
+                      <Comment
+                        comment={m.comment}
+                        date={m.date}
+                        user={m.username}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <Alert variant="warning">
+                    No hay comentarios disponibles.
+                  </Alert>
+                )}
+              </div>
+            )}
+          </Container>
         </div>
-        :
-        <div>
-          <Loader />
-        </div>
-      }
+      )}
     </div>
   );
 }

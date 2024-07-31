@@ -16,7 +16,12 @@ export default function Loader() {
       justifyContent: "center",
       alignItems: "center",
       zIndex: 1000,
-    }
-  }
-  return <div style={styles.container}><Spinner size="md" /><h3>Cargando...</h3></div>;
+    },
+  };
+  return (
+    <div style={styles.container}>
+      <Spinner size="md" />
+      <h3>Cargando...</h3>
+    </div>
+  );
 }
