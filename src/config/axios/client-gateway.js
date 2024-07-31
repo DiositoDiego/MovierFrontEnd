@@ -7,7 +7,7 @@ AxiosClient.interceptors.request.use(
     const authToken = localStorage.getItem("idToken");
     if (Boolean(authToken)) {
       if (!config.url.includes("login") && !config.url.includes("create_user") && !config.url.includes("set_password")) {
-        config.headers.Authorization = `Bearer ${authToken}`
+        config.headers.Authorization = `Bearer ${authToken}`;
       }
     }
     return config;
@@ -44,7 +44,7 @@ AxiosClient.interceptors.response.use(
       if(localStorage.getItem('idToken') !== null && !window.location.pathname.includes("/login") && !window.location.pathname.includes("/signup") && !window.location.pathname.includes("/complete-login")){
         switch(error.response ? error.response.status : 0){
           case 401:
-            errorMessage = "Sesión expirada. Por favor inicia sesión nuevamente.";
+            errorMessage = "SesiÃ³n expirada. Por favor inicia sesiÃ³n nuevamente.";
             break;
           }
       } 
