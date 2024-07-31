@@ -1,0 +1,33 @@
+.comment-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.comment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.comment-user {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.comment-date {
+  font-size: 0.85rem;
+}
+
+.comment-text {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: var(--primary-light);
+}
+
+@media (max-width: 576px) {
+  .comment-card {
+    margin: 10px 0;
+  }
+}
