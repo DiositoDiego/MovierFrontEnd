@@ -24,11 +24,11 @@ export default function CommentForm(props) {
     console.log("Entré", { isSubmitted });
     e.preventDefault();
     if (!isSubmitted) {
-      setIsSubmitted(true);
       const commentValid = comment.trim() !== "";
       setIsValidComment(commentValid);
-
+      
       if (commentValid) {
+        setIsSubmitted(true);
         setIsLoading(true);
         setIsValidComment(true);
         try {

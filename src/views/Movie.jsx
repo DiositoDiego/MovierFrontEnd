@@ -68,6 +68,7 @@ export default function Movie() {
                   src={movie.image || ""}
                   className="img"
                   alt={movie.title}
+                  title={movie.title}
                 />
               </Col>
               <Col xl={5} className="d-flex flex-column">

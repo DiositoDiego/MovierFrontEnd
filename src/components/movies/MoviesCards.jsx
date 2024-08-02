@@ -55,7 +55,12 @@ export default function MoviesCards() {
             <Card key={movie.id} className="card">
               <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                 <h4 className="font-bold text-large title-text">
-                  {movie.title}
+                  {
+                    movie.title.length > 24 ?
+                      movie.title.substring(0, 24) + "..." 
+                      : 
+                      movie.title
+                  }
                 </h4>
               </CardHeader>
               <CardBody className="overflow-visible py-2">
