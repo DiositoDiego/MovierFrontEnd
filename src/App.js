@@ -12,6 +12,8 @@ import Logout from './components/forms/Logout';
 import { MoviesList } from './views/admin/MoviesList';
 import { EditMovie } from './views/admin/EditMovie';
 import WatchedMovies from './views/WatchedMovies';
+import ForbiddenPage from './views/common/ForbiddenPage';
+import ProtectedRoute from './components/security/ProtectedRoute';
 
 function App() {
   return (
@@ -23,13 +25,14 @@ function App() {
         <Route path='/complete-login' element={<CompleteLoginForm />}></Route>
         <Route path='/logout' element={<Logout />}></Route>
         <Route path='/movies'>
-          <Route index element={<Movies />}></Route>
-          <Route path='m/:id' element={<Movie />}></Route>
-          <Route path='watched' element={<WatchedMovies />}></Route>
+          <Route index element={<ProtectedRoute element={Movies} allowedRoles={["Usuario", "Administrador"]} />}></Route>
+          <Route path='m/:id' element={<ProtectedRoute element={Movie} allowedRoles={["Usuario", "Administrador"]} />}></Route>
+          <Route path='watched' element={<ProtectedRoute element={WatchedMovies} allowedRoles={["Usuario", "Administrador"]} />}></Route>
         </Route>
-        <Route path='/create-movie' element={<CreateMovie />}></Route>
-        <Route path='/list-movies' element={<MoviesList />}></Route>
-        <Route path='/edit-movie' element={<EditMovie />}></Route>
+        <Route path='/create-movie' element={<ProtectedRoute element={CreateMovie} allowedRoles={"Administrador"} />}></Route>
+        <Route path='/list-movies' element={<ProtectedRoute element={MoviesList} allowedRoles={"Administrador"} />}></Route>
+        <Route path='/edit-movie' element={<ProtectedRoute element={EditMovie} allowedRoles={"Administrador"} />}></Route>
+        <Route path='/forbidden' element={<ForbiddenPage />}></Route>
         <Route path='*' element={<PageNotFund />}></Route>
       </Routes>
     </div>

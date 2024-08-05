@@ -18,6 +18,7 @@ export default function Movie() {
   const [movie, setMovie] = useState({});
   const [isMovieLoading, setIsMovieLoading] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
+  const [isWatchedLoading, setIsWatchedLoading] = useState(false);
 
   useEffect(() => {
     fetchMovie(id);
@@ -51,6 +52,21 @@ export default function Movie() {
       setIsCommentsLoading(false);
     }
   };
+
+  const handleClick = async() => {
+    setIsWatchedLoading(true);
+    try {
+      const response = await api.doPost(endpoints.WatchedMovieFunction, {
+        movie_id: parseInt(id),
+        user_id: parseInt(localStorage.getItem("userId")),
+      });
+      if (response && response.status === 200) {
+        
+      }
+    } catch (error) {} finally {
+      setIsWatchedLoading(false);
+    }
+  }
 
   return (
     <div>
@@ -90,7 +106,13 @@ export default function Movie() {
                   </Col>
                 </Row>
                 <Col>
-                  <Button className="button-movie" variant="contained">Marcar como vista</Button>
+                  <Button onClick={handleClick} className="button-movie" variant="contained">
+                    { !isWatchedLoading ?
+                      "Marcar como vista"
+                      :
+                      <Spinner size="sm" />
+                    }
+                  </Button>
                 </Col>
               </Col>
               <Col xl={1} className="d-flex justify-content-center">
