@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Col, Container, Row, Spinner } from "react-bootstrap";
+import { Alert, Col, Container, Row } from "react-bootstrap";
+import { Spinner } from "@nextui-org/react";
 import { useParams } from "react-router-dom";
 import "../css/movies/movie.css";
 import CommentForm from "../components/forms/CommentForm";
@@ -110,7 +111,7 @@ export default function Movie() {
                     { !isWatchedLoading ?
                       "Marcar como vista"
                       :
-                      <Spinner size="sm" />
+                      <Spinner color="secondary" />
                     }
                   </Button>
                 </Col>
@@ -142,7 +143,7 @@ export default function Movie() {
           <Container className="mb-5" fluid>
             {isCommentsLoading ? (
               <div className="w-100 d-flex justify-content-center">
-                <Spinner size="md" />
+                <Spinner color="secondary" />
               </div>
             ) : (
               <div>

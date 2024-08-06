@@ -3,11 +3,11 @@ import Swal from "sweetalert2";
 
 export default function Logout() {
   if(
-    localStorage.removeItem("accessToken") ||
-    localStorage.removeItem("refreshToken") ||
-    localStorage.removeItem("idToken") ||
-    localStorage.removeItem("role") ||
-    localStorage.removeItem("userId")
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("refreshToken") ||
+    localStorage.getItem("idToken") ||
+    localStorage.getItem("role") ||
+    localStorage.getItem("userId")
   ){
     Swal.fire({
       html: `

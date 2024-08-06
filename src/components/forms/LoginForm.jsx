@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Col, Container, Form, Row, Spinner } from "react-bootstrap";
+import { Col, Container, Form, Row } from "react-bootstrap";
+import { Spinner } from "@nextui-org/react";
 import { emailRegex, passwordRegex } from "../../utils/regex";
 import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
@@ -50,7 +51,7 @@ export default function LoginForm() {
           localStorage.setItem("idToken", response.data.id_token);
           localStorage.setItem("role", response.data.role);
           localStorage.setItem("userId", response.data.id);
-          window.location.href = "/movies";
+          window.location.href = "/home";
         }
       } catch (e) {
         setErrors({ form: "Error en el inicio de sesión" });
@@ -105,7 +106,7 @@ export default function LoginForm() {
             {!isLoading ? (
               "Iniciar sesión"
             ) : (
-              <Spinner animation="border" size="sm" role="status" />
+              <Spinner color="secondary" />
             )}
           </Button>
         </Form>

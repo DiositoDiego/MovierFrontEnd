@@ -16,7 +16,7 @@ export default function MoviesNavbar() {
       <Navbar className="nav" bg="light" expand="lg">
         <Container fluid className="nav">
           <Navbar href="/movies" className="brand">
-            <a className="logo" href="/movies">
+            <a className="logo" href="/home">
               <p>MOVIER</p>
             </a>
           </Navbar>
