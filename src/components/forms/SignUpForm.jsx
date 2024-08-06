@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Container, Form, Spinner } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
+import { Spinner } from "@nextui-org/react";
 import { emailRegex } from "../../utils/regex";
 import Swal from "sweetalert2";
 import api from "../../config/axios/client-gateway";
@@ -90,7 +91,7 @@ export default function SignUpForm() {
             className="button-submit"
             type="submit"
           >
-            {!isLoading ? "Registrarse" : <Spinner size="sm" />}
+            {!isLoading ? "Registrarse" : <Spinner color="secondary" />}
           </Button>
         </Form>
         <div className="create-account">

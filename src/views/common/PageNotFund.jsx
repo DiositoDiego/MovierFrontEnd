@@ -9,8 +9,8 @@ export const PageNotFund = () => {
       <div className="error-container">
         <h1 className="code-error">404</h1>
         <p>Página no encontrada</p>
-        <Button variant="contained" href="/movies">
-          Volver a la página de inicio
+        <Button variant="contained" href="/home">
+          Ir a la página de inicio
         </Button>
       </div>
     </AppLayout>

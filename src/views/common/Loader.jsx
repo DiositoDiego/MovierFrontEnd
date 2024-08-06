@@ -1,5 +1,5 @@
 import React from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner } from "@nextui-org/react";
 
 export default function Loader() {
   const styles = {
@@ -20,8 +20,7 @@ export default function Loader() {
   };
   return (
     <div style={styles.container}>
-      <Spinner size="md" />
-      <h3>Cargando...</h3>
+      <Spinner color="secondary" label="Cargando..."/>
     </div>
   );
 }

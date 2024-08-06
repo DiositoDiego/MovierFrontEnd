@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Container, Form, InputGroup, Spinner } from "react-bootstrap";
+import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import { Spinner } from "@nextui-org/react";
 import { passwordRegex } from "../../utils/regex";
 import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
@@ -181,7 +182,7 @@ export default function CompleteLoginForm() {
           - Un carácter especial. <br />
         </Form.Text>
         <Button className="mt-3" disabled={isLoading} style={{ width: "100%" }} type="submit">
-          {!isLoading ? "Completar registro" : <Spinner size="sm" />}
+          {!isLoading ? "Completar registro" : <Spinner color="secondary" />}
         </Button>
       </Form>
     </Container>

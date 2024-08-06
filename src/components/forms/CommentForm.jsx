@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Form, InputGroup, Spinner } from "react-bootstrap";
+import { Form, InputGroup } from "react-bootstrap";
+import { Spinner, Textarea } from "@nextui-org/react";
 import Swal from "sweetalert2";
 import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
@@ -73,8 +74,7 @@ export default function CommentForm(props) {
       </div>
       <Form onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Control
-            as="textarea"
+          <Textarea
             placeholder="Comentar..."
             rows={props.rows || defaultRows}
             maxLength={255}
@@ -109,7 +109,7 @@ export default function CommentForm(props) {
           style={{ width: "100%" }}
           disabled={isLoading}
         >
-          {!isLoading ? "Comentar" : <Spinner size="sm" />}
+          {!isLoading ? "Comentar" : <Spinner color="secondary" />}
         </Button>
       </Form>
     </div>
