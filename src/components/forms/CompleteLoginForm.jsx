@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import { Container, Form, InputGroup } from "react-bootstrap";
 import { Spinner } from "@nextui-org/react";
 import { passwordRegex } from "../../utils/regex";
 import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
 import Swal from "sweetalert2";
+import { Button } from "@mui/material";
+import { Input } from "@nextui-org/react";
 
 export default function CompleteLoginForm() {
-  const [username, setUsername] = useState("");
-  const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
-  const [validPassword, setValidPassword] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [validConfirmPassword, setValidConfirmPassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const styles = {
     container: {
@@ -32,47 +30,33 @@ export default function CompleteLoginForm() {
     },
   };
 
-  useEffect(() => {
-    if (isSubmitted) {
-      setValidUsername(Boolean(username));
-    }
-  }, [username, isSubmitted]);
+  const validate = () => {
+    const newErrors = {};
+    if (!passwordRegex.test(password)) newErrors.password = "Contraseña no válida";
+    if (password !== confirmPassword) newErrors.confirmPassword = "Las contraseñas no coinciden";
+    return newErrors;
+  };
 
-  useEffect(() => {
-    if (isSubmitted) {
-      setValidPassword(passwordRegex.test(password));
-    }
-  }, [password, isSubmitted]);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      setValidConfirmPassword(password && password === confirmPassword);
-    }
-  }, [confirmPassword, password, isSubmitted]);
+  const handleChange = (setter, field) => (event) => {
+    setter(event.target.value);
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
+  };
 
   const handleSubmitForm = async (evt) => {
     evt.preventDefault();
-    setIsSubmitted(true);
+    const newErrors = validate();
+    setErrors(newErrors);
 
-    const isUsernameValid = Boolean(username);
-    const isPasswordValid = passwordRegex.test(password);
-    const isConfirmPasswordValid = password && password === confirmPassword;
-
-    setValidUsername(isUsernameValid);
-    setValidPassword(isPasswordValid);
-    setValidConfirmPassword(isConfirmPasswordValid);
-
-    if (isUsernameValid && isPasswordValid && isConfirmPasswordValid) {
+    if (!isLoading && Object.keys(newErrors).length === 0) {
+      setIsLoading(true);
       try {
-        setIsLoading(true);
-        console.log("entre");
         const response = await api.doPost(endpoints.SetPasswordFunction, {
           username: localStorage.getItem('email'),
           temporary_password: localStorage.getItem('password'),
           new_password: password,
         });
-        
-        if(response.status === 200){
+
+        if (response.status === 200) {
           Swal.fire({
             title: "¡Éxito!",
             text: response.data.message,
@@ -80,18 +64,18 @@ export default function CompleteLoginForm() {
             confirmButtonText: "Cerrar",
             allowEscapeKey: false,
           }).then(async () => {
-
             Swal.fire({
-              html: '<h3>Iniciando sesión...</h3><span class="spinner-border spinner-border-sm"></span>', 
+              html: '<h3>Iniciando sesión...</h3><span class="spinner-border spinner-border-sm"></span>',
               showConfirmButton: false,
               allowOutsideClick: false,
               allowEscapeKey: false,
             });
 
-            const responseLogin = await api.doPost(endpoints.LoginFunction, { 
+            const responseLogin = await api.doPost(endpoints.LoginFunction, {
               username: localStorage.getItem('email'),
               password: password
             });
+
             if (responseLogin.status === 200) {
               localStorage.removeItem('email');
               localStorage.removeItem('password');
@@ -99,81 +83,57 @@ export default function CompleteLoginForm() {
               localStorage.setItem("refreshToken", responseLogin.data.refresh_token);
               localStorage.setItem("idToken", responseLogin.data.id_token);
               localStorage.setItem("role", responseLogin.data.role);
-              localStorage.setItem("userId", response.data.id);
+              localStorage.setItem("userId", responseLogin.data.id);
               window.location.href = "/movies";
             }
-          })
+          });
         }
-      } catch (error) {} finally {
+      } catch (error) {
+        setErrors({ form: "Error en el proceso de completar el registro" });
+      } finally {
         setIsLoading(false);
-      };
+      }
     }
   };
 
   return (
     <Container fluid style={styles.container}>
       <Form onSubmit={handleSubmitForm} style={styles.form}>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Nombre de usuario:</Form.Label>
-          <Form.Control
-            className={validUsername ? "" : "border-error"}
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Nombre de usuario"
-          />
-          { !validUsername ?  
-          <Form.Text className="message-error">
-            Nombre de usuario inválido.
-          </Form.Text>
-          : ""
-          }
-        </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Nueva contraseña:</Form.Label>
-          <InputGroup>
-            <Form.Control
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              type={showPassword ? "text" : "password"}
-              placeholder="Contraseña"
-              className={validPassword ? "" : "border-error"}
-            />
-            <Button
-              variant="secondary"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </InputGroup>
-          {validPassword ? "" :
-            <Form.Text className="message-error">
-              Contraseña no válida.
-            </Form.Text>
-          }
+          <Input
+            type={showPassword ? "text" : "password"}
+            label="Nueva contraseña"
+            placeholder="Ingresa tu nueva contraseña"
+            value={password}
+            onChange={handleChange(setPassword, "password")}
+            endContent={
+              <Button onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </Button>
+            }
+            errorMessage={errors.password}
+            isInvalid={!!errors.password}
+            color="secondary"
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicConfirmedPassword">
-          <Form.Label>Confirmar nueva contraseña:</Form.Label>
-          <InputGroup>
-            <Form.Control
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              type={showPassword ? "text" : "password"}
-              placeholder="Confirmar contraseña"
-              className={validConfirmPassword ? "" : "border-error"}
-            />
-            <Button
-              variant="secondary"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </Button>
-          </InputGroup>
-          { validConfirmPassword ? "" :
-            <Form.Text className="message-error">
-              Las contraseñas no coinciden.
-            </Form.Text>
-          }
+          <Input
+            type={showPassword ? "text" : "password"}
+            label="Confirmar nueva contraseña"
+            placeholder="Confirma tu nueva contraseña"
+            value={confirmPassword}
+            onChange={handleChange(setConfirmPassword, "confirmPassword")}
+            endContent={
+              <Button onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </Button>
+            }
+            errorMessage={errors.confirmPassword}
+            isInvalid={!!errors.confirmPassword}
+            color="secondary"
+          />
         </Form.Group>
+        {errors.form && <p className="error-message">{errors.form}</p>}
         <Form.Text className="mb-3">
           Recuerda que tu contraseña debe contener mínimo 8 caracteres con al menos: <br />
           - Una letra mayúscula. <br />
@@ -181,7 +141,7 @@ export default function CompleteLoginForm() {
           - Un número. <br />
           - Un carácter especial. <br />
         </Form.Text>
-        <Button className="mt-3" disabled={isLoading} style={{ width: "100%" }} type="submit">
+        <Button variant="contained" className="mt-3" disabled={isLoading} style={{ width: "100%" }} type="submit">
           {!isLoading ? "Completar registro" : <Spinner color="secondary" />}
         </Button>
       </Form>
