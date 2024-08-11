@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,7 +10,24 @@ import PersonIcon from "@mui/icons-material/Person";
 import { IconButton } from "@mui/material";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import LogoutIcon from "@mui/icons-material/Logout";
+import SearchModal from "./SearchModal"; // Importa el modal
+
 export default function MoviesNavbar() {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchClick = () => {
+    setShowModal(true); 
+  };
+  const handleClose = () => {
+    setSearchQuery(''); 
+    setShowModal(false); 
+  };
+
   return (
     <div>
       <Navbar className="nav" bg="light" expand="lg">
@@ -28,6 +45,9 @@ export default function MoviesNavbar() {
                   <SearchIcon className="search" />
                 </div>
               }
+              value={searchQuery}
+              onClick={handleSearchClick} 
+              onChange={handleSearchChange} 
             />
           </Form>
           <Navbar className="user">
@@ -47,6 +67,11 @@ export default function MoviesNavbar() {
           </Navbar>
         </Container>
       </Navbar>
+      <SearchModal 
+        initialSearchQuery={searchQuery}
+        show={showModal}
+        handleClose={handleClose} 
+      />
       <Outlet />
     </div>
   );
