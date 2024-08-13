@@ -1,7 +1,5 @@
-// navigation/SearchModal.js
 import React, { useState, useEffect } from "react";
 import { Modal, Container, Form } from "react-bootstrap";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 import { Button, CardMedia } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,24 +13,19 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (searchQuery) {
-      searchMovies(searchQuery);
-    }
-  }, [searchQuery]);
+  let timeoutId;
 
   useEffect(() => {
     if (!show) {
       setSearchQuery("");
-      setMovies([]); 
+      setMovies([]);
     }
   }, [show]);
 
   const searchMovies = async (query) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(endpoints.SearchMoviesFunction(query));
+      const response = await axios.get(`${endpoints.SearchMoviesFunction}${query}`);
       if (response && response.status === 200) {
         setMovies(response.data.Peliculas);
       }
@@ -44,44 +37,55 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchQuery(e.target.value);
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    clearTimeout(timeoutId); 
+    if (value) {
+      timeoutId = setTimeout(() => {
+        searchMovies(value);
+      }, 500);
+    } else {
+      setMovies([]); 
+    }
   };
 
   const handleClick = (id) => {
     navigate(`/movies/m/${id}`);
     handleClose(); 
   };
-  
 
   const styles = {
     modalContent: {
       display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around',
+      flexDirection: 'column',
       padding: '20px',
     },
-    card: {
-      width: '200px',
-      margin: '15px',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-      borderRadius: '10px',
-      overflow: 'hidden',
-      height: 'auto', 
+    listItem: {
+      display: 'flex',
+      alignItems: 'center',
+      padding: '10px',
+      borderBottom: '1px solid #ddd',
+      cursor: 'pointer',
     },
-    cardMedia: {
-      height: '200px', 
-      width: '100%',
+    listItemImage: {
+      height: '50px',
+      width: '50px',
+      marginRight: '10px',
       objectFit: 'cover',
+      borderRadius: '5px',
     },
-    titleText: {
+    listItemText: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    listItemTitle: {
       fontWeight: 'bold',
       fontSize: 'large',
     },
-    descriptionText: {
+    listItemDescription: {
       fontSize: '14px',
-    },
-    button: {
-      width: '100%',
+      color: '#666',
     }
   };
 
@@ -108,34 +112,21 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
             <Loader />
           ) : movies.length > 0 ? (
             movies.map((movie) => (
-              <Card key={movie.id} style={styles.card}>
-                <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                  <h4 style={styles.titleText}>
+              <div key={movie.id} style={styles.listItem} onClick={() => handleClick(movie.id)}>
+                <img 
+                  src={movie.image} 
+                  alt={movie.title} 
+                  style={styles.listItemImage} 
+                />
+                <div style={styles.listItemText}>
+                  <p style={styles.listItemTitle}>
                     {movie.title.length > 24 ? movie.title.substring(0, 24) + "..." : movie.title}
-                  </h4>
-                </CardHeader>
-                <CardBody className="overflow-visible py-2">
-                  <CardMedia
-                    style={styles.cardMedia}
-                    image={movie.image}
-                    title="Movie Image"
-                  />
-                  <p style={styles.descriptionText}>
-                    {movie.description.substring(0, 50)}
-                    <span>...</span>
                   </p>
-                </CardBody>
-                <CardFooter className="flex-col items-center">
-                  <Button
-                    variant="contained"
-                    auto
-                    onClick={() => handleClick(movie.id)}
-                    style={styles.button}
-                  >
-                    Ver más
-                  </Button>
-                </CardFooter>
-              </Card>
+                  <p style={styles.listItemDescription}>
+                    {movie.description.substring(0, 50)}...
+                  </p>
+                </div>
+              </div>
             ))
           ) : (
             <p>No se encontraron resultados.</p>

@@ -26,8 +26,7 @@ const CreateCommentFunction = "https://k9q0jtx81f.execute-api.us-east-1.amazonaw
 
 const GetAllMoviesFunction = "https://plkzmhdc98.execute-api.us-east-1.amazonaws.com/Prod/getAll" //Esta trae status 0 y 1 
 
-const SearchMoviesFunction = (searchTerm) => 
-  `https://plkzmhdc98.execute-api.us-east-1.amazonaws.com/Prod/searchMovies/${searchTerm}`;
+const SearchMoviesFunction = "https://plkzmhdc98.execute-api.us-east-1.amazonaws.com/Prod/searchMovies/";
 
 
 
