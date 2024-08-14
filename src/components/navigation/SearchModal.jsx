@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Container, Form } from "react-bootstrap";
-import { Button, CardMedia } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import endpoints from "../../utils/endpoints";
-import Loader from "../../views/common/Loader";
 import { Input } from "@nextui-org/react";
 import SearchIcon from "@mui/icons-material/Search";
+import Loader from "../../views/common/Loader";
+import endpoints from "../../utils/endpoints";
+import { useNavigate } from "react-router-dom";
 
-const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
-  const [searchQuery, setSearchQuery] = useState(initialSearchQuery || "");
+const SearchModal = ({ initialSearchQuery = '', show, handleClose }) => {
+  const [searchQuery, setSearchQuery] = useState(initialSearchQuery);
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [typingTimeout, setTypingTimeout] = useState(null);
   const navigate = useNavigate();
-  let timeoutId;
 
   useEffect(() => {
     if (!show) {
@@ -21,6 +20,20 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
       setMovies([]);
     }
   }, [show]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      if (typingTimeout) {
+        clearTimeout(typingTimeout);
+      }
+      setTypingTimeout(
+        setTimeout(() => {
+          searchMovies(searchQuery);
+          console.log(searchQuery);
+        }, 500)
+      );
+    }
+  }, [searchQuery]);
 
   const searchMovies = async (query) => {
     setIsLoading(true);
@@ -37,17 +50,7 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
   };
 
   const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearchQuery(value);
-
-    clearTimeout(timeoutId); 
-    if (value) {
-      timeoutId = setTimeout(() => {
-        searchMovies(value);
-      }, 500);
-    } else {
-      setMovies([]); 
-    }
+    setSearchQuery(e.target.value);
   };
 
   const handleClick = (id) => {
@@ -56,37 +59,28 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
   };
 
   const styles = {
-    modalContent: {
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '20px',
-    },
     listItem: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '10px',
-      borderBottom: '1px solid #ddd',
-      cursor: 'pointer',
+      display: "flex",
+      alignItems: "center",
+      padding: "10px",
+      cursor: "pointer",
+      borderBottom: "1px solid #ccc",
     },
-    listItemImage: {
-      height: '50px',
-      width: '50px',
-      marginRight: '10px',
-      objectFit: 'cover',
-      borderRadius: '5px',
+    thumbnail: {
+      width: "50px",
+      height: "50px",
+      marginRight: "10px",
+      objectFit: "cover",
+      borderRadius: "5px",
     },
-    listItemText: {
-      display: 'flex',
-      flexDirection: 'column',
+    title: {
+      fontSize: "16px",
+      fontWeight: "bold",
     },
-    listItemTitle: {
-      fontWeight: 'bold',
-      fontSize: 'large',
+    description: {
+      fontSize: "14px",
+      color: "#666",
     },
-    listItemDescription: {
-      fontSize: '14px',
-      color: '#666',
-    }
   };
 
   return (
@@ -107,24 +101,30 @@ const SearchModal = ({ initialSearchQuery, show, handleClose }) => {
             }
           />
         </Form>
-        <Container fluid style={styles.modalContent}>
+        <Container fluid>
           {isLoading ? (
             <Loader />
           ) : movies.length > 0 ? (
             movies.map((movie) => (
-              <div key={movie.id} style={styles.listItem} onClick={() => handleClick(movie.id)}>
-                <img 
-                  src={movie.image} 
-                  alt={movie.title} 
-                  style={styles.listItemImage} 
+              <div
+                key={movie.id}
+                style={styles.listItem}
+                onClick={() => handleClick(movie.id)}
+              >
+                <img
+                  src={movie.image}
+                  alt={movie.title}
+                  style={styles.thumbnail}
                 />
-                <div style={styles.listItemText}>
-                  <p style={styles.listItemTitle}>
-                    {movie.title.length > 24 ? movie.title.substring(0, 24) + "..." : movie.title}
-                  </p>
-                  <p style={styles.listItemDescription}>
+                <div>
+                  <div style={styles.title}>
+                    {movie.title.length > 24
+                      ? `${movie.title.substring(0, 24)}...`
+                      : movie.title}
+                  </div>
+                  <div style={styles.description}>
                     {movie.description.substring(0, 50)}...
-                  </p>
+                  </div>
                 </div>
               </div>
             ))
