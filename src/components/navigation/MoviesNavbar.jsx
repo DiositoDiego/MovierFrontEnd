@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
-import Form from "react-bootstrap/Form";
-import { Input } from "@nextui-org/react";
+import Button from "react-bootstrap/Button"; // Importa el componente Button
 import SearchIcon from "@mui/icons-material/Search";
 import "../../css/navigation/MovierNavbar.css";
 import PersonIcon from "@mui/icons-material/Person";
 import { IconButton } from "@mui/material";
 import MovieFilterIcon from "@mui/icons-material/MovieFilter";
 import LogoutIcon from "@mui/icons-material/Logout";
+import SearchModal from "./SearchModal"; // Importa el modal
+
 export default function MoviesNavbar() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSearchClick = () => {
+    setShowModal(true);
+  };
+
+  const handleClose = () => {
+    setShowModal(false);
+  };
+
   return (
     <div>
       <Navbar className="nav" bg="light" expand="lg">
@@ -20,16 +31,13 @@ export default function MoviesNavbar() {
               <p>MOVIER</p>
             </a>
           </Navbar>
-          <Form className="form">
-            <Input
-              placeholder="Busca películas"
-              startContent={
-                <div>
-                  <SearchIcon className="search" />
-                </div>
-              }
-            />
-          </Form>
+          <Button
+            variant="light"
+            onClick={handleSearchClick}
+            style={{ color: "purple", backgroundColor: "white", width: "300px" }}
+          >
+            Busca películas
+          </Button>
           <Navbar className="user">
             <IconButton aria-label="delete">
               <Link to="/movies/watched">
@@ -47,6 +55,10 @@ export default function MoviesNavbar() {
           </Navbar>
         </Container>
       </Navbar>
+      <SearchModal 
+        show={showModal}
+        handleClose={handleClose} 
+      />
       <Outlet />
     </div>
   );
