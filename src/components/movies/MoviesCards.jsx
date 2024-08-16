@@ -20,6 +20,7 @@ export default function MoviesCards() {
   const [isLoading, setIsLoading] = useState(false);
   const imgSize = 300;
   const navigate = useNavigate();
+  const user_id = localStorage.getItem('userId')
 
   useEffect(() => {
     getMovies();

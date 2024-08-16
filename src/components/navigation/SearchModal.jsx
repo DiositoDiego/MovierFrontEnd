@@ -13,7 +13,6 @@ const SearchModal = ({ initialSearchQuery = '', show, handleClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [typingTimeout, setTypingTimeout] = useState(null);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!show) {
       setSearchQuery("");
@@ -29,7 +28,7 @@ const SearchModal = ({ initialSearchQuery = '', show, handleClose }) => {
       setTypingTimeout(
         setTimeout(() => {
           searchMovies(searchQuery);
-          console.log(searchQuery);
+          // console.log(searchQuery);
         }, 500)
       );
     }

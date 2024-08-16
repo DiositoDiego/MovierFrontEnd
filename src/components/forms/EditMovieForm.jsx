@@ -25,9 +25,10 @@ export const EditMovieForm = () => {
     setIsLoading(true);
     console.log(localStorage);
     let id = localStorage.getItem("idMovie");
+    let user_id = localStorage.getItem("userId")
     console.log(id);
     try {
-      const response = await api.doGet(endpoints.GetMovieByIdFunction+id);
+      const response = await api.doGet(endpoints.GetMovieByIdFunction+id+ "/" + user_id);
       if (response && response.status === 200) {
         setTitle(response.data.Pelicula.title);
         setGenre(response.data.Pelicula.genre);

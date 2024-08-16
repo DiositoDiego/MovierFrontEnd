@@ -14,6 +14,7 @@ import MoviesNavbar from "../components/navigation/MoviesNavbar";
 
 export default function Movie() {
   const { id } = useParams();
+  const user_id = localStorage.getItem('userId')
 
   const [comments, setComments] = useState([]);
   const [movie, setMovie] = useState({});
@@ -29,7 +30,7 @@ export default function Movie() {
   const fetchMovie = async (id) => {
     try {
       setIsMovieLoading(true);
-      const response = await api.doGet(endpoints.GetMovieByIdFunction + id);
+      const response = await api.doGet(endpoints.GetMovieByIdFunction + id + "/" + user_id );
       if (response && response.status === 200) {
         setMovie(response.data.Pelicula);
       }
