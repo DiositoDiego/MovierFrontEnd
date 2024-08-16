@@ -21,6 +21,7 @@ export default function Movie() {
   const [isMovieLoading, setIsMovieLoading] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
   const [isWatchedLoading, setIsWatchedLoading] = useState(false);
+  const [isWatched, setIsWatched] = useState(false)
 
   useEffect(() => {
     fetchMovie(id);
@@ -33,6 +34,9 @@ export default function Movie() {
       const response = await api.doGet(endpoints.GetMovieByIdFunction + id + "/" + user_id );
       if (response && response.status === 200) {
         setMovie(response.data.Pelicula);
+        // console.log('response.data.Pelicula', response.data.Pelicula)
+        setIsWatched(Boolean(response.data.Pelicula.watched))
+        //  console.log("response.data.Pelicula.watched", typeof response.data.Pelicula.watched)
       }
     } catch (error) {
       console.error("Error fetching movie:", error);
@@ -58,14 +62,19 @@ export default function Movie() {
   const handleClick = async() => {
     setIsWatchedLoading(true);
     try {
-      const response = await api.doPost(endpoints.WatchedMovieFunction, {
+      const endpoint = endpoints.WatchedMovieFunction;
+      const response = await api.doPost(endpoint, {
         movie_id: parseInt(id),
         user_id: parseInt(localStorage.getItem("userId")),
       });
+      console.log("Response del marcar como vista ",response)
       if (response && response.status === 200) {
-        
+        // setIsWatched(!isWatched);
+        fetchMovie(id);
       }
-    } catch (error) {} finally {
+    } catch (error) {
+      console.error("Error actualizar el estado de watched de la pelicula:", error);
+    } finally {
       setIsWatchedLoading(false);
     }
   }
@@ -108,12 +117,12 @@ export default function Movie() {
                   </Col>
                 </Row>
                 <Col>
-                  <Button onClick={handleClick} className="button-movie" variant="contained">
-                    { !isWatchedLoading ?
-                      "Marcar como vista"
-                      :
+                  <Button onClick={handleClick} className="button-movie" variant="contained" disabled={isWatchedLoading}>
+                    {isWatchedLoading ? (
                       <Spinner color="secondary" />
-                    }
+                    ) : (
+                      isWatched ? "Desmarcar como vista" : "Marcar como vista"
+                    )}
                   </Button>
                 </Col>
               </Col>
@@ -125,12 +134,11 @@ export default function Movie() {
                 <Chip color={movie.status === 1 ? "primary" : "error"}>
                   {movie.status === 1 ? "Activa" : "Inactiva"}
                 </Chip>
-                {/* AQUI CAMBIAR POR EL ESTADO DEL GET WATCHED */}
                 <Chip
                   className="mx-2"
                   color={movie.status === 1 ? "primary" : "error"}
                 >
-                  {movie.status === 1 ? "Vista" : "No vista"}
+                  {movie.watched === 1 ? "Vista" : "No vista"}
                 </Chip>
               </Col>
             </Row>
