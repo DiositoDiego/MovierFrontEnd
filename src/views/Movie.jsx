@@ -14,14 +14,14 @@ import MoviesNavbar from "../components/navigation/MoviesNavbar";
 
 export default function Movie() {
   const { id } = useParams();
-  const user_id = localStorage.getItem('userId')
+  const user_id = localStorage.getItem("userId");
 
   const [comments, setComments] = useState([]);
   const [movie, setMovie] = useState({});
   const [isMovieLoading, setIsMovieLoading] = useState(false);
   const [isCommentsLoading, setIsCommentsLoading] = useState(false);
   const [isWatchedLoading, setIsWatchedLoading] = useState(false);
-  const [isWatched, setIsWatched] = useState(false)
+  const [isWatched, setIsWatched] = useState(false);
 
   useEffect(() => {
     fetchMovie(id);
@@ -31,12 +31,12 @@ export default function Movie() {
   const fetchMovie = async (id) => {
     try {
       setIsMovieLoading(true);
-      const response = await api.doGet(endpoints.GetMovieByIdFunction + id + "/" + user_id );
+      const response = await api.doGet(
+        endpoints.GetMovieByIdFunction + id + "/" + user_id
+      );
       if (response && response.status === 200) {
         setMovie(response.data.Pelicula);
-        // console.log('response.data.Pelicula', response.data.Pelicula)
-        setIsWatched(Boolean(response.data.Pelicula.watched))
-        //  console.log("response.data.Pelicula.watched", typeof response.data.Pelicula.watched)
+        setIsWatched(Boolean(response.data.Pelicula.watched));
       }
     } catch (error) {
       console.error("Error fetching movie:", error);
@@ -59,7 +59,7 @@ export default function Movie() {
     }
   };
 
-  const handleClick = async() => {
+  const handleClick = async () => {
     setIsWatchedLoading(true);
     try {
       const endpoint = endpoints.WatchedMovieFunction;
@@ -67,17 +67,20 @@ export default function Movie() {
         movie_id: parseInt(id),
         user_id: parseInt(localStorage.getItem("userId")),
       });
-      console.log("Response del marcar como vista ",response)
+      console.log("Response del marcar como vista ", response);
       if (response && response.status === 200) {
         // setIsWatched(!isWatched);
         fetchMovie(id);
       }
     } catch (error) {
-      console.error("Error actualizar el estado de watched de la pelicula:", error);
+      console.error(
+        "Error actualizar el estado de watched de la pelicula:",
+        error
+      );
     } finally {
       setIsWatchedLoading(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -117,11 +120,18 @@ export default function Movie() {
                   </Col>
                 </Row>
                 <Col>
-                  <Button onClick={handleClick} className="button-movie" variant="contained" disabled={isWatchedLoading}>
+                  <Button
+                    onClick={handleClick}
+                    className="button-movie"
+                    variant="contained"
+                    disabled={isWatchedLoading}
+                  >
                     {isWatchedLoading ? (
                       <Spinner color="secondary" />
+                    ) : isWatched ? (
+                      "Desmarcar como vista"
                     ) : (
-                      isWatched ? "Desmarcar como vista" : "Marcar como vista"
+                      "Marcar como vista"
                     )}
                   </Button>
                 </Col>
