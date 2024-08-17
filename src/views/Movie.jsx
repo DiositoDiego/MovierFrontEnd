@@ -11,6 +11,7 @@ import Loader from "./common/Loader";
 import { Chip } from "@nextui-org/react";
 import { Button } from "@mui/material";
 import MoviesNavbar from "../components/navigation/MoviesNavbar";
+import Swal from "sweetalert2";
 
 export default function Movie() {
   const { id } = useParams();
@@ -67,10 +68,16 @@ export default function Movie() {
         movie_id: parseInt(id),
         user_id: parseInt(localStorage.getItem("userId")),
       });
-      console.log("Response del marcar como vista ", response);
       if (response && response.status === 200) {
-        // setIsWatched(!isWatched);
-        fetchMovie(id);
+        Swal.fire({
+          icon: "success",
+          title: "Éxito",
+          text: "Estado de vista actualizado correctamente",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          fetchMovie(id);
+        });
       }
     } catch (error) {
       console.error(
