@@ -14,6 +14,8 @@ import SearchModal from "./SearchModal"; // Importa el modal
 export default function MoviesNavbar() {
   const [showModal, setShowModal] = useState(false);
 
+  const rol = localStorage.getItem("role");
+
   const handleSearchClick = () => {
     setShowModal(true);
   };
@@ -31,19 +33,37 @@ export default function MoviesNavbar() {
               <p>MOVIER</p>
             </a>
           </Navbar>
-          <Button
+
+          {/* <Button
             variant="light"
             onClick={handleSearchClick}
             style={{ color: "purple", backgroundColor: "white", width: "300px" }}
           >
             Busca películas
-          </Button>
+          </Button> */}
+          {/* Solo quiero ver la barra de busqueda si el rol no es Administrador */}
+          {rol !== "Administrador" && (
+            <Button
+              variant="light"
+              onClick={handleSearchClick}
+              style={{
+                color: "purple",
+                backgroundColor: "white",
+                width: "300px",
+              }}
+            >
+              Busca películas
+            </Button>
+          )}
           <Navbar className="user">
-            <IconButton aria-label="delete">
-              <Link to="/movies/watched">
-                <MovieFilterIcon fontSize="large" />
-              </Link>
-            </IconButton>
+            {rol !==
+              "Administrador" &&(
+                <IconButton aria-label="delete">
+                  <Link to="/movies/watched">
+                    <MovieFilterIcon fontSize="large" />
+                  </Link>
+                </IconButton>
+              )}
             <IconButton aria-label="delete">
               <PersonIcon fontSize="large" />
             </IconButton>
@@ -55,10 +75,7 @@ export default function MoviesNavbar() {
           </Navbar>
         </Container>
       </Navbar>
-      <SearchModal 
-        show={showModal}
-        handleClose={handleClose} 
-      />
+      <SearchModal show={showModal} handleClose={handleClose} />
       <Outlet />
     </div>
   );
