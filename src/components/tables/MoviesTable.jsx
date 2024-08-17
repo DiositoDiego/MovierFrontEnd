@@ -57,11 +57,11 @@ export const MoviesTable = () => {
   };
 
   const onAddMovie = () => {
-    navigate("/create-movie");
+    navigate("/admin/create");
   };
 
   const onEditMovie = (id) => {
-    navigate(`/edit-movie`);
+    navigate("/admin/edit");
     localStorage.setItem("idMovie", id);
   };
 
@@ -77,19 +77,28 @@ export const MoviesTable = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        api.doPatch(endpoints.ChangeStatusMovieFunction+id)
-            .then((response) => {
-              if (response && response.status === 200) {
-                Swal.fire("Desactivada", "La película ha sido desactivada", "success");
-                getMovies();
-              } else {
-                Swal.fire("Error", "No se pudo desactivar la película", "error");
-              }
-            })
-            .catch((error) => {
-              console.error("Error desactivando la película:", error);
-              Swal.fire("Error", "Ocurrió un error al desactivar la película", "error");
-            });
+        api
+          .doPatch(endpoints.ChangeStatusMovieFunction + id)
+          .then((response) => {
+            if (response && response.status === 200) {
+              Swal.fire(
+                "Desactivada",
+                "La película ha sido desactivada",
+                "success"
+              );
+              getMovies();
+            } else {
+              Swal.fire("Error", "No se pudo desactivar la película", "error");
+            }
+          })
+          .catch((error) => {
+            console.error("Error desactivando la película:", error);
+            Swal.fire(
+              "Error",
+              "Ocurrió un error al desactivar la película",
+              "error"
+            );
+          });
       }
     });
   };
@@ -106,23 +115,27 @@ export const MoviesTable = () => {
       cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
-        api.doPatch(endpoints.ChangeStatusMovieFunction+id)
-            .then((response) => {
-              if (response && response.status === 200) {
-                Swal.fire("Activada", "La película ha sido activada", "success");
-                getMovies();
-              } else {
-                Swal.fire("Error", "No se pudo activar la película", "error");
-              }
-            })
-            .catch((error) => {
-              console.error("Error activando la película:", error);
-              Swal.fire("Error", "Ocurrió un error al activar la película", "error");
-            });
+        api
+          .doPatch(endpoints.ChangeStatusMovieFunction + id)
+          .then((response) => {
+            if (response && response.status === 200) {
+              Swal.fire("Activada", "La película ha sido activada", "success");
+              getMovies();
+            } else {
+              Swal.fire("Error", "No se pudo activar la película", "error");
+            }
+          })
+          .catch((error) => {
+            console.error("Error activando la película:", error);
+            Swal.fire(
+              "Error",
+              "Ocurrió un error al activar la película",
+              "error"
+            );
+          });
       }
     });
   };
-
 
   const getKeyValue = (item, key) => {
     if (key === "image") {
@@ -139,13 +152,17 @@ export const MoviesTable = () => {
       return (
         <>
           {item.status === 1 ? (
-              <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)}>
-                <EditIcon className="edit-icon" />
-              </IconButton>
-            ) : (
-                <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)} disabled>
-                    <EditIcon className="edit-icon" />
-                </IconButton>
+            <IconButton aria-label="edit" onClick={() => onEditMovie(item.id)}>
+              <EditIcon className="edit-icon" />
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label="edit"
+              onClick={() => onEditMovie(item.id)}
+              disabled
+            >
+              <EditIcon className="edit-icon" />
+            </IconButton>
           )}
           {item.status === 1 ? (
             <IconButton

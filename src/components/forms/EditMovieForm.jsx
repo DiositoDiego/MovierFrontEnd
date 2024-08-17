@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/admin/CreateMovieForm.css";
-import {Input, Spinner, Textarea} from "@nextui-org/react";
+import { Input, Spinner, Textarea } from "@nextui-org/react";
 import { Button } from "@mui/material";
 import { GoBack } from "../common/GoBack";
 import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
 import Swal from "sweetalert2";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const EditMovieForm = () => {
   const navigate = useNavigate();
@@ -25,10 +25,12 @@ export const EditMovieForm = () => {
     setIsLoading(true);
     console.log(localStorage);
     let id = localStorage.getItem("idMovie");
-    let user_id = localStorage.getItem("userId")
+    let user_id = localStorage.getItem("userId");
     console.log(id);
     try {
-      const response = await api.doGet(endpoints.GetMovieByIdFunction+id+ "/" + user_id);
+      const response = await api.doGet(
+        endpoints.GetMovieByIdFunction + id + "/" + user_id
+      );
       if (response && response.status === 200) {
         setTitle(response.data.Pelicula.title);
         setGenre(response.data.Pelicula.genre);
@@ -40,7 +42,7 @@ export const EditMovieForm = () => {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const validate = () => {
     const newErrors = {};
@@ -59,11 +61,11 @@ export const EditMovieForm = () => {
     setIsLoading(true);
     let id = localStorage.getItem("idMovie");
     try {
-      const response = await api.doPut(endpoints.UpdateMovieFunction+id, {
+      const response = await api.doPut(endpoints.UpdateMovieFunction + id, {
         title,
         description,
         genre,
-        image
+        image,
       });
       if (response && response.status === 200) {
         Swal.fire("Éxito", "La película ha sido actualizada", "success");
@@ -99,7 +101,7 @@ export const EditMovieForm = () => {
     setImage("");
     setDescription("");
     setErrors({});
-    navigate("/list-movies");
+    navigate("/admin/list");
     localStorage.removeItem("idMovie");
   };
 
@@ -108,66 +110,66 @@ export const EditMovieForm = () => {
       <h1 className="title">Actualizar Película</h1>
       <GoBack />
       {isLoading ? (
-          <div className="loading">
-            <Spinner color="secondary" label="Cargando información..." />
-          </div>
+        <div className="loading">
+          <Spinner color="secondary" label="Cargando información..." />
+        </div>
       ) : (
-          <div className="forms">
-        <Input
-          className="input"
-          label="Título de la película"
-          placeholder="Ingrese el título de la película"
-          labelPlacement="outside"
-          isInvalid={!!errors.title}
-          errorMessage={errors.title}
-          value={title}
-          onChange={handleChange(setTitle, "title")}
-        />
-        <Input
-          className="input"
-          label="Género de la película"
-          placeholder="Ingrese el género de la película"
-          labelPlacement="outside"
-          isInvalid={!!errors.genre}
-          errorMessage={errors.genre}
-          value={genre}
-          onChange={handleChange(setGenre, "genre")}
-        />
-        <Input
-          className="input"
-          label="Imagen de la película"
-          placeholder="Ingrese la URL de la imagen"
-          labelPlacement="outside"
-          isInvalid={!!errors.image}
-          errorMessage={errors.image}
-          value={image}
-          onChange={handleChange(setImage, "image")}
-        />
-        <Textarea
-          className="textarea"
-          label="Descripción de la película"
-          placeholder="Ingrese la descripción de la película"
-          labelPlacement="outside"
-          rows={10}
-          isInvalid={!!errors.description}
-          errorMessage={errors.description}
-          value={description}
-          onChange={handleChange(setDescription, "description")}
-        />
-        <div className="buttons">
-          <Button
+        <div className="forms">
+          <Input
+            className="input"
+            label="Título de la película"
+            placeholder="Ingrese el título de la película"
+            labelPlacement="outside"
+            isInvalid={!!errors.title}
+            errorMessage={errors.title}
+            value={title}
+            onChange={handleChange(setTitle, "title")}
+          />
+          <Input
+            className="input"
+            label="Género de la película"
+            placeholder="Ingrese el género de la película"
+            labelPlacement="outside"
+            isInvalid={!!errors.genre}
+            errorMessage={errors.genre}
+            value={genre}
+            onChange={handleChange(setGenre, "genre")}
+          />
+          <Input
+            className="input"
+            label="Imagen de la película"
+            placeholder="Ingrese la URL de la imagen"
+            labelPlacement="outside"
+            isInvalid={!!errors.image}
+            errorMessage={errors.image}
+            value={image}
+            onChange={handleChange(setImage, "image")}
+          />
+          <Textarea
+            className="textarea"
+            label="Descripción de la película"
+            placeholder="Ingrese la descripción de la película"
+            labelPlacement="outside"
+            rows={10}
+            isInvalid={!!errors.description}
+            errorMessage={errors.description}
+            value={description}
+            onChange={handleChange(setDescription, "description")}
+          />
+          <div className="buttons">
+            <Button
               variant="contained"
               className="save"
               onClick={onSubmit}
               disabled={isLoading}
-          >
-            {isLoading ? "Actualizando..." : "Actualizar Película"}
-          </Button>
-          <Button variant="contained" className="cancel" onClick={onCancel}>
-            Cancelar
-          </Button>
+            >
+              {isLoading ? "Actualizando..." : "Actualizar Película"}
+            </Button>
+            <Button variant="contained" className="cancel" onClick={onCancel}>
+              Cancelar
+            </Button>
+          </div>
         </div>
-      </div>
       )}
     </>
   );
