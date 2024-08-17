@@ -32,7 +32,7 @@ function App() {
           <Route path='watched' element={<ProtectedRoute element={WatchedMovies} allowedRoles={["Usuario"]} />}></Route>
         </Route>
         <Route path='/admin'>
-          <Route index element={<Navigate to={"/admin/list"}/>}></Route>
+          <Route index element={<Navigate to={"/admin/list"} />}></Route>
           <Route path='create' element={<ProtectedRoute element={CreateMovie} allowedRoles={["Administrador"]} />}></Route>
           <Route path='list' element={<ProtectedRoute element={MoviesList} allowedRoles={["Administrador"]} />}></Route>
           <Route path='edit' element={<ProtectedRoute element={EditMovie} allowedRoles={["Administrador"]} />}></Route>

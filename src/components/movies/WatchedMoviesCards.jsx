@@ -20,6 +20,7 @@ export default function WatchedMoviesCards() {
   const [isLoading, setIsLoading] = useState(false);
   const imgSize = 300;
   const navigate = useNavigate();
+  const user_id = localStorage.getItem("userId");
 
   useEffect(() => {
     getMovies();
@@ -32,9 +33,11 @@ export default function WatchedMoviesCards() {
   const getMovies = async () => {
     setIsLoading(true);
     try {
-      const response = await api.doGet(endpoints.GetMovieFunction);
+      const response = await api.doGet(
+        endpoints.GetWatchedMovieFunction + user_id
+      );
       if (response && response.status === 200) {
-        setMovies(response.data.Peliculas);
+        setMovies(response.data);
       }
     } catch (error) {
       console.log({ error });
@@ -73,7 +76,7 @@ export default function WatchedMoviesCards() {
                 <Button
                   variant="contained"
                   auto
-                  onClick={() => handleClick(movie.id)}
+                  onClick={() => handleClick(movie.movie_id)}
                   className="w-full"
                 >
                   Ver más
