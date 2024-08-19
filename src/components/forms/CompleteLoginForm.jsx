@@ -10,21 +10,14 @@ import "../../css/auth/Login.css";
 import { Button } from "@mui/material";
 
 export default function CompleteLoginForm() {
-  const [username, setUsername] = useState("");
-  const [validUsername, setValidUsername] = useState(true);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(true);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [validConfirmPassword, setValidConfirmPassword] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  useEffect(() => {
-    if (isSubmitted) {
-      setValidUsername(Boolean(username));
-    }
-  }, [username, isSubmitted]);
 
   useEffect(() => {
     if (isSubmitted) {
@@ -42,15 +35,13 @@ export default function CompleteLoginForm() {
     evt.preventDefault();
     setIsSubmitted(true);
 
-    const isUsernameValid = Boolean(username);
     const isPasswordValid = passwordRegex.test(password);
     const isConfirmPasswordValid = password && password === confirmPassword;
 
-    setValidUsername(isUsernameValid);
     setValidPassword(isPasswordValid);
     setValidConfirmPassword(isConfirmPasswordValid);
 
-    if (isUsernameValid && isPasswordValid && isConfirmPasswordValid) {
+    if (isPasswordValid && isConfirmPasswordValid) {
       try {
         setIsLoading(true);
         console.log("entre");
@@ -94,6 +85,7 @@ export default function CompleteLoginForm() {
               localStorage.setItem("role", responseLogin.data.role);
               localStorage.setItem("userId", response.data.id);
               window.location.href = "/movies";
+              console.log(responseLogin.data);
             }
           });
         }
@@ -111,20 +103,6 @@ export default function CompleteLoginForm() {
         <h4 className="subtitle">Completa tu registro</h4>
         <Container className="login-container">
           <Form onSubmit={handleSubmitForm}>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Input
-                type="email"
-                label="Usuario"
-                placeholder="Ingresa tu correo electrónico"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                errorMessage={
-                  validUsername ? "" : "Nombre de usuario inválido."
-                }
-                isInvalid={!validUsername}
-                color="secondary"
-              />
-            </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Input
                 type={showPassword ? "text" : "password"}
@@ -144,14 +122,16 @@ export default function CompleteLoginForm() {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicConfirmedPassword">
               <Input
-                type={showPassword ? "text" : "password"}
+                type={showConfirmPassword ? "text" : "password"}
                 label="Confirmar contraseña"
                 placeholder="Confirma tu contraseña"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 endContent={
-                  <Button onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  <Button
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                   </Button>
                 }
                 color="secondary"
