@@ -42,7 +42,7 @@ export default function MoviesNavbar() {
             Busca películas
           </Button> */}
           {/* Solo quiero ver la barra de busqueda si el rol no es Administrador */}
-          {rol !== "Administrador" && (
+          {/* rol !== "Administrador" && (
             <Button
               variant="light"
               onClick={handleSearchClick}
@@ -54,7 +54,7 @@ export default function MoviesNavbar() {
             >
               Busca películas
             </Button>
-          )}
+          ) */}
           <Navbar className="user">
             {rol !==
               "Administrador" &&(
