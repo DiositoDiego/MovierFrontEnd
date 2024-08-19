@@ -43,7 +43,7 @@ export const CreateMovieForm = () => {
       if (response && response.status === 200) {
         Swal.fire("Éxito", "La película ha sido creada", "success");
       }
-      window.location.href = "/list-movies";
+      window.location.href = "/home";
     } catch (error) {
     } finally {
       setIsLoading(false);

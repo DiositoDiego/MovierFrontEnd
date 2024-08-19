@@ -66,7 +66,7 @@ export const EditMovieForm = () => {
       });
       if (response && response.status === 200) {
         Swal.fire("Éxito", "La película ha sido actualizada", "success");
-        window.location.href = "/list-movies";
+        window.location.href = "/home";
         localStorage.removeItem("idMovie");
       }
     } catch (error) {

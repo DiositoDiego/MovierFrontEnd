@@ -24,7 +24,7 @@ const LoginFunction = "https://0giy9cnir9.execute-api.us-east-1.amazonaws.com/Pr
 
 const CreateCommentFunction = "https://w9cs1xxpmg.execute-api.us-east-1.amazonaws.com/Prod/create"
 
-const GetAllMoviesFunction = "https://plkzmhdc98.execute-api.us-east-1.amazonaws.com/Prod/getAll" //Esta trae status 0 y 1 
+const GetAllMoviesFunction = "https://plkzmhdc98.execute-api.us-east-1.amazonaws.com/Prod/getAllMovies" //Esta trae status 0 y 1 
 
 const SearchMoviesFunction = "https://plkzmhdc98.execute-api.us-east-1.amazonaws.com/Prod/searchMovies/";
 
