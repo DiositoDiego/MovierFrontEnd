@@ -23,10 +23,8 @@ export const EditMovieForm = () => {
 
   const getMovie = async () => {
     setIsLoading(true);
-    console.log(localStorage);
     let id = localStorage.getItem("idMovie");
     let user_id = localStorage.getItem("userId");
-    console.log(id);
     try {
       const response = await api.doGet(
         endpoints.GetMovieByIdFunction + id + "/" + user_id
@@ -38,7 +36,6 @@ export const EditMovieForm = () => {
         setDescription(response.data.Pelicula.description);
       }
     } catch (error) {
-      console.log({ error });
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +70,6 @@ export const EditMovieForm = () => {
         localStorage.removeItem("idMovie");
       }
     } catch (error) {
-      console.log({ error });
       Swal.fire("Error", error.data.message, "error");
     } finally {
       setIsLoading(false);
@@ -90,7 +86,6 @@ export const EditMovieForm = () => {
     const newErrors = validate();
     setErrors(newErrors);
     if (Object.keys(newErrors).length === 0) {
-      console.log({ title, genre, image, description });
       UpdateMovie();
     }
   };

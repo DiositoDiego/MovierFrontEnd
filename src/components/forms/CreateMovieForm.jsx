@@ -45,8 +45,6 @@ export const CreateMovieForm = () => {
       }
       window.location.href = "/list-movies";
     } catch (error) {
-      console.log({ error });
-      Swal.fire("Error", error.data.message, "error");
     } finally {
       setIsLoading(false);
     }

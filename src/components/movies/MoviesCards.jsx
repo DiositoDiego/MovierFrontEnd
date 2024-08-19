@@ -38,7 +38,6 @@ export default function MoviesCards() {
         setMovies(response.data.Peliculas);
       }
     } catch (error) {
-      console.log({ error });
     } finally {
       setIsLoading(false);
     }

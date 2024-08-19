@@ -40,7 +40,6 @@ export default function WatchedMoviesCards() {
         setMovies(response.data);
       }
     } catch (error) {
-      console.log({ error });
     } finally {
       setIsLoading(false);
     }

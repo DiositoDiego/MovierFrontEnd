@@ -28,7 +28,6 @@ const SearchModal = ({ initialSearchQuery = '', show, handleClose }) => {
       setTypingTimeout(
         setTimeout(() => {
           searchMovies(searchQuery);
-          // console.log(searchQuery);
         }, 500)
       );
     }

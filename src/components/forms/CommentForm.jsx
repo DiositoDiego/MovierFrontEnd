@@ -17,12 +17,10 @@ export default function CommentForm(props) {
   useEffect(() => {
     if (isSubmitted) {
       setIsValidComment(comment.trim() !== "");
-      console.log({ isSubmitted });
     }
   }, [comment, isSubmitted]);
 
   const handleSubmit = async (e) => {
-    console.log("Entré", { isSubmitted });
     e.preventDefault();
     if (!isSubmitted) {
       const commentValid = comment.trim() !== "";

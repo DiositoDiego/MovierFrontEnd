@@ -22,8 +22,6 @@ export default function LoginForm() {
   const validate = () => {
     const newErrors = {};
     if (!emailRegex.test(email)) newErrors.email = "Email no válido";
-    if (!passwordRegex.test(password))
-      newErrors.password = "Contraseña no válida";
     return newErrors;
   };
 
@@ -54,7 +52,6 @@ export default function LoginForm() {
           window.location.href = "/home";
         }
       } catch (e) {
-        setErrors({ form: "Error en el inicio de sesión" });
       } finally {
         setIsLoading(false);
       }

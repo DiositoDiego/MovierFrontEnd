@@ -44,7 +44,6 @@ export default function CompleteLoginForm() {
     if (isPasswordValid && isConfirmPasswordValid) {
       try {
         setIsLoading(true);
-        console.log("entre");
         const response = await api.doPost(endpoints.SetPasswordFunction, {
           username: localStorage.getItem("email"),
           temporary_password: localStorage.getItem("password"),
@@ -73,19 +72,12 @@ export default function CompleteLoginForm() {
             if (responseLogin.status === 200) {
               localStorage.removeItem("email");
               localStorage.removeItem("password");
-              localStorage.setItem(
-                "accessToken",
-                responseLogin.data.access_token
-              );
-              localStorage.setItem(
-                "refreshToken",
-                responseLogin.data.refresh_token
-              );
+              localStorage.setItem("accessToken", responseLogin.data.access_token);
+              localStorage.setItem("refreshToken", responseLogin.data.refresh_token);
               localStorage.setItem("idToken", responseLogin.data.id_token);
               localStorage.setItem("role", responseLogin.data.role);
-              localStorage.setItem("userId", response.data.id);
-              window.location.href = "/movies";
-              console.log(responseLogin.data);
+              localStorage.setItem("userId", responseLogin.data.id);
+              window.location.href = "/home";
             }
           });
         }

@@ -7,7 +7,7 @@ AxiosClient.interceptors.request.use(
     const authToken = localStorage.getItem("idToken");
     if (Boolean(authToken)) {
       if (!config.url.includes("login") && !config.url.includes("create_user") && !config.url.includes("set_password")) {
-        config.headers.Authorization = `Bearer ${authToken}`;
+        config.headers.Authorization = `${authToken}`;
       }
     }
     return config;
@@ -20,14 +20,11 @@ AxiosClient.interceptors.request.use(
 //interceptor para los response
 AxiosClient.interceptors.response.use(
   (response) => {
-    console.log("response: ", response)
     if (response.status && response.status >= 200) {
       return Promise.resolve(response);
     }
   },
   (error) => {
-    
-    console.log({error})
     
     let errorMessage = 'Ha ocurrido un error en el servidor';
     if (error.response && error.response.data) {
@@ -38,9 +35,7 @@ AxiosClient.interceptors.response.use(
       const config = JSON.parse(error.response.config.data);
       localStorage.setItem('email', config.username);
       localStorage.setItem('password', config.password);
-    } else {
-      console.log(localStorage.getItem('idToken') !== null && !window.location.pathname.includes("/login") && !window.location.pathname.includes("/signup") && !window.location.pathname.includes("/complete-login"));
-      
+    } else {      
       if(localStorage.getItem('idToken') !== null && !window.location.pathname.includes("/login") && !window.location.pathname.includes("/signup") && !window.location.pathname.includes("/complete-login")){
         switch(error.response ? error.response.status : 0){
           case 401:
@@ -48,8 +43,6 @@ AxiosClient.interceptors.response.use(
             break;
           }
       } 
-      
-      console.log(errorMessage);
       Swal.fire({
         title: "Oops...",
         text: errorMessage,

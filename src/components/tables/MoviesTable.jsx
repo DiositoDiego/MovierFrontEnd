@@ -50,7 +50,6 @@ export const MoviesTable = () => {
         setMovies(response.data.Peliculas);
       }
     } catch (error) {
-      console.log({ error });
     } finally {
       setIsLoading(false);
     }
