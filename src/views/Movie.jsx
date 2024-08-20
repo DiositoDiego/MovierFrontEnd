@@ -12,7 +12,8 @@ import { Chip } from "@nextui-org/react";
 import { Button } from "@mui/material";
 import MoviesNavbar from "../components/navigation/MoviesNavbar";
 import Swal from "sweetalert2";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 export default function Movie() {
   const { id } = useParams();
   const user_id = localStorage.getItem("userId");
@@ -99,61 +100,52 @@ export default function Movie() {
         <div>
           <MoviesNavbar />
           <Container fluid className="mainContainer">
-            <Row>
-              <Col xl={4} className="Col">
+            <Row className="movie-row">
+              <Col xl={4} className="movie-image-col">
                 <img
                   src={movie.image || ""}
-                  className="img"
+                  className="movie-image"
                   alt={movie.title}
                   title={movie.title}
                 />
               </Col>
-              <Col xl={5} className="d-flex flex-column">
-                <Row>
-                  <Col>
-                    <h1 className="textColorWhite title-movie-2">
-                      {movie.title}
-                    </h1>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <p className="textColorWhite">{movie.description}</p>
-                  </Col>
-                </Row>
-                <Row className="align-self-end">
-                  <Col>
-                    <h5 className="textColorWhite">Género: {movie.genre}</h5>
-                  </Col>
-                </Row>
-                <Col>
-                  <Button
-                    onClick={handleClick}
-                    className="button-movie"
-                    variant="contained"
-                    disabled={isWatchedLoading}
-                  >
-                    {isWatchedLoading ? (
-                      <Spinner color="secondary" />
-                    ) : isWatched ? (
-                      "Desmarcar como vista"
+              <Col xl={5} className="movie-info-col">
+                <h1 className="movie-title">{movie.title}</h1>
+                <p className="movie-description">{movie.description}</p>
+                <h5 className="movie-genre">Género: {movie.genre}</h5>
+                <Button
+                  onClick={handleClick}
+                  className="button-movie"
+                  variant="contained"
+                  disabled={isWatchedLoading}
+                  endIcon={
+                    isWatched ? (
+                      <VisibilityOffIcon color="secondary" />
                     ) : (
-                      "Marcar como vista"
-                    )}
-                  </Button>
-                </Col>
+                      <VisibilityIcon color="secondary" />
+                    )
+                  }
+                >
+                  {isWatchedLoading ? (
+                    <Spinner color="secondary" />
+                  ) : isWatched ? (
+                    "Desmarcar como vista"
+                  ) : (
+                    "Marcar como vista"
+                  )}
+                </Button>
               </Col>
-              <Col xl={1} className="d-flex justify-content-center">
+              <Col xl={1} className="vertical-line-col">
                 <div className="vertical-line" />
               </Col>
-              <Col xl={2}>
-                <h3 className="textColorWhite mr-2">Estado</h3>
+              <Col xl={2} className="movie-status-col">
+                <h3 className="movie-status-title">Estado</h3>
                 <Chip color={movie.status === 1 ? "primary" : "error"}>
                   {movie.status === 1 ? "Activa" : "Inactiva"}
                 </Chip>
                 <Chip
                   className="mx-2"
-                  color={movie.status === 1 ? "primary" : "error"}
+                  color={movie.watched === 1 ? "primary" : "error"}
                 >
                   {movie.watched === 1 ? "Vista" : "No vista"}
                 </Chip>
@@ -161,12 +153,11 @@ export default function Movie() {
             </Row>
           </Container>
           <hr />
-
           <Container className="mt-5 commentContainer">
             <CommentForm rows={4} fetchComments={fetchComments} idMovie={id} />
           </Container>
           <hr />
-          <Container className="mb-5" fluid>
+          <Container className="mb-5 comment-list-container" fluid>
             {isCommentsLoading ? (
               <div className="w-100 d-flex justify-content-center">
                 <Spinner color="secondary" />
@@ -176,7 +167,7 @@ export default function Movie() {
                 <h2 className="text-center mb-3 comment-title">Comentarios</h2>
                 {comments && comments.length > 0 ? (
                   comments.map((m) => (
-                    <div key={m.comment_id}>
+                    <div key={m.comment_id} className="comment">
                       <Comment
                         comment={m.comment}
                         date={m.date}

@@ -7,7 +7,8 @@ import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
+import EditIcon from "@mui/icons-material/Edit";
+import CloseIcon from "@mui/icons-material/Close";
 export const EditMovieForm = () => {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
@@ -157,10 +158,16 @@ export const EditMovieForm = () => {
               className="save"
               onClick={onSubmit}
               disabled={isLoading}
+              endIcon={<EditIcon />}
             >
               {isLoading ? "Actualizando..." : "Actualizar Película"}
             </Button>
-            <Button variant="contained" className="cancel" onClick={onCancel}>
+            <Button
+              variant="contained"
+              className="cancel"
+              onClick={onCancel}
+              endIcon={<CloseIcon />}
+            >
               Cancelar
             </Button>
           </div>

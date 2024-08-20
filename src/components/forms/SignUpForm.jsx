@@ -7,7 +7,7 @@ import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
 import { Input } from "@nextui-org/react";
 import { Button } from "@mui/material";
-
+import SendIcon from "@mui/icons-material/Send";
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +41,7 @@ export default function SignUpForm() {
           user_name: email,
         });
 
-        if(response.status === 200) {
+        if (response.status === 200) {
           Swal.fire({
             title: "¡Éxito!",
             text: "Se ha enviado un email con una contraseña temporal, por favor inicia sesión para completar el registro.",
@@ -65,41 +65,46 @@ export default function SignUpForm() {
 
   return (
     <>
-      <h1 className="title movier">MOVIER</h1>
-      <h4 className="subtitle">Registra tu cuenta</h4>
-      <Container className="login-container">
-        <Form onSubmit={handleSubmitForm} className="form-group">
-          <Form.Group className="mb-3" controlId="emailFormCreate">
-            <Input
-              type="email"
-              label="Correo"
-              placeholder="Ingresa tu correo electrónico"
-              value={email}
-              onChange={handleChange(setEmail, "email")}
-              errorMessage={errors.email}
-              isInvalid={!!errors.email}
-              color="secondary"
-            />
-            {errors.email && (
-              <div className="error-message">{errors.email}</div>
-            )}
-          </Form.Group>
+      <div className="login">
+        <div className="card-login">
+          <h1 className="title movier">MOVIER</h1>
+          <h4 className="subtitle">Registra tu cuenta</h4>
+          <Container className="login-container">
+            <Form onSubmit={handleSubmitForm} className="form-group">
+              <Form.Group className="mb-3" controlId="emailFormCreate">
+                <Input
+                  type="email"
+                  label="Correo"
+                  placeholder="Ingresa tu correo electrónico"
+                  value={email}
+                  onChange={handleChange(setEmail, "email")}
+                  errorMessage={errors.email}
+                  isInvalid={!!errors.email}
+                  color="secondary"
+                />
+                {errors.email && (
+                  <div className="error-message">{errors.email}</div>
+                )}
+              </Form.Group>
 
-          <Button
-            variant="contained"
-            disabled={isLoading}
-            className="button-submit"
-            type="submit"
-          >
-            {!isLoading ? "Registrarse" : <Spinner color="secondary" />}
-          </Button>
-        </Form>
-        <div className="create-account">
-          <p className="text-account">
-            ¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a>
-          </p>
+              <Button
+                variant="contained"
+                disabled={isLoading}
+                className="button-submit"
+                type="submit"
+                endIcon={<SendIcon />}
+              >
+                {!isLoading ? "Registrarse" : <Spinner color="secondary" />}
+              </Button>
+            </Form>
+            <div className="create-account">
+              <p className="text-account">
+                ¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a>
+              </p>
+            </div>
+          </Container>
         </div>
-      </Container>
+      </div>
     </>
   );
 }

@@ -34,15 +34,7 @@ export default function MoviesNavbar() {
             </a>
           </Navbar>
 
-          {/* <Button
-            variant="light"
-            onClick={handleSearchClick}
-            style={{ color: "purple", backgroundColor: "white", width: "300px" }}
-          >
-            Busca películas
-          </Button> */}
-          {/* Solo quiero ver la barra de busqueda si el rol no es Administrador */}
-          {/* rol !== "Administrador" && (
+          {/* {rol !== "Administrador" && (
             <Button
               variant="light"
               onClick={handleSearchClick}
@@ -54,19 +46,16 @@ export default function MoviesNavbar() {
             >
               Busca películas
             </Button>
-          ) */}
+          )} */}
           <Navbar className="user">
-            {rol !==
-              "Administrador" &&(
-                <IconButton aria-label="delete">
-                  <Link to="/movies/watched">
-                    <MovieFilterIcon fontSize="large" />
-                  </Link>
-                </IconButton>
-              )}
-            <IconButton aria-label="delete">
-              <PersonIcon fontSize="large" />
-            </IconButton>
+            {rol !== "Administrador" && (
+              <IconButton aria-label="delete">
+                <Link to="/movies/watched">
+                  <MovieFilterIcon fontSize="large" />
+                </Link>
+              </IconButton>
+            )}
+
             <IconButton aria-label="delete">
               <Link to="/logout">
                 <LogoutIcon fontSize="large" />

@@ -8,7 +8,7 @@ import endpoints from "../../utils/endpoints";
 import Swal from "sweetalert2";
 import "../../css/auth/Login.css";
 import { Button } from "@mui/material";
-
+import LoginIcon from '@mui/icons-material/Login';
 export default function CompleteLoginForm() {
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(true);
@@ -72,8 +72,14 @@ export default function CompleteLoginForm() {
             if (responseLogin.status === 200) {
               localStorage.removeItem("email");
               localStorage.removeItem("password");
-              localStorage.setItem("accessToken", responseLogin.data.access_token);
-              localStorage.setItem("refreshToken", responseLogin.data.refresh_token);
+              localStorage.setItem(
+                "accessToken",
+                responseLogin.data.access_token
+              );
+              localStorage.setItem(
+                "refreshToken",
+                responseLogin.data.refresh_token
+              );
               localStorage.setItem("idToken", responseLogin.data.id_token);
               localStorage.setItem("role", responseLogin.data.role);
               localStorage.setItem("userId", responseLogin.data.id);
@@ -90,73 +96,81 @@ export default function CompleteLoginForm() {
 
   return (
     <>
-      <Container fluid>
-        <h1 className="title movier">MOVIER</h1>
-        <h4 className="subtitle">Completa tu registro</h4>
-        <Container className="login-container">
-          <Form onSubmit={handleSubmitForm}>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Input
-                type={showPassword ? "text" : "password"}
-                label="Contraseña"
-                placeholder="Ingresa tu contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                endContent={
-                  <Button onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                  </Button>
-                }
-                color="secondary"
-                errorMessage={validPassword ? "" : "Contraseña no válida."}
-                isInvalid={!validPassword}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicConfirmedPassword">
-              <Input
-                type={showConfirmPassword ? "text" : "password"}
-                label="Confirmar contraseña"
-                placeholder="Confirma tu contraseña"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                endContent={
-                  <Button
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                  </Button>
-                }
-                color="secondary"
-                errorMessage={
-                  validConfirmPassword ? "" : "Las contraseñas no coinciden."
-                }
-                isInvalid={!validConfirmPassword}
-              />
-            </Form.Group>
-            <Form.Text className="mb-3">
-              Recuerda que tu contraseña debe contener mínimo 8 caracteres con
-              al menos: <br />
-              - Una letra mayúscula. <br />
-              - Una letra minúscula. <br />
-              - Un número. <br />
-              - Un carácter especial. <br />
-            </Form.Text>
-            <Button
-              className="mt-3"
-              variant="contained"
-              disabled={isLoading}
-              style={{ width: "100%" }}
-              type="submit"
-            >
-              {!isLoading ? (
-                "Completar registro"
-              ) : (
-                <Spinner color="secondary" />
-              )}
-            </Button>
-          </Form>
-        </Container>
-      </Container>
+      <div className="login">
+        <div className="card-login">
+          <h1 className="title movier">MOVIER</h1>
+          <h4 className="subtitle">Completa tu registro</h4>
+          <Container className="login-container">
+            <Form onSubmit={handleSubmitForm}>
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  label="Contraseña"
+                  placeholder="Ingresa tu contraseña"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  endContent={
+                    <Button onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </Button>
+                  }
+                  color="secondary"
+                  errorMessage={validPassword ? "" : "Contraseña no válida."}
+                  isInvalid={!validPassword}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="formBasicConfirmedPassword"
+              >
+                <Input
+                  type={showConfirmPassword ? "text" : "password"}
+                  label="Confirmar contraseña"
+                  placeholder="Confirma tu contraseña"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  endContent={
+                    <Button
+                      onClick={() =>
+                        setShowConfirmPassword(!showConfirmPassword)
+                      }
+                    >
+                      {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                    </Button>
+                  }
+                  color="secondary"
+                  errorMessage={
+                    validConfirmPassword ? "" : "Las contraseñas no coinciden."
+                  }
+                  isInvalid={!validConfirmPassword}
+                />
+              </Form.Group>
+              <Form.Text className="mb-3">
+                Recuerda que tu contraseña debe contener mínimo 8 caracteres con
+                al menos: <br />
+                - Una letra mayúscula. <br />
+                - Una letra minúscula. <br />
+                - Un número. <br />
+                - Un carácter especial. <br />
+              </Form.Text>
+              <Button
+                className="mt-3"
+                variant="contained"
+                disabled={isLoading}
+                style={{ width: "100%" }}
+                type="submit"
+
+              >
+                {!isLoading ? (
+                  "Completar registro"
+                ) : (
+                  <Spinner color="secondary" />
+                )}
+              </Button>
+            </Form>
+          </Container>
+        </div>
+      </div>
     </>
   );
 }

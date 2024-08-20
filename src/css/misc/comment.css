@@ -1,8 +1,13 @@
+.comment-container {
+  margin-bottom: 20px;
+}
+
 .comment-card {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #fff;
 }
 
 .comment-card:hover {
@@ -10,24 +15,35 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .comment-user {
-  font-weight: bold;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 0.8rem;
   color: #333;
+}
+
+.comment-date-container {
+  text-align: right;
 }
 
 .comment-date {
   font-size: 0.85rem;
+  color: #777;
 }
 
 .comment-text {
   margin-top: 10px;
   font-size: 1rem;
-  color: var(--primary-light);
+  color: #333;
 }
 
 @media (max-width: 576px) {
-  .comment-card {
+  .comment-container {
     margin: 10px 0;
   }
 }

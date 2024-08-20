@@ -2,10 +2,7 @@
 
 .brand {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  margin-left: 20px;
 }
 
 .logo {
@@ -15,17 +12,17 @@
   font-weight: 900;
   letter-spacing: 4px;
   text-decoration: none;
-  margin-top: 20px;
+  margin: 0 20px;
+  margin-top: 10px;
 }
 
 .nav {
-  padding: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0;
   background-color: var(--primary);
   height: 60px;
+  padding: 0 20px;
 }
 
 .MuiSvgIcon-root {
@@ -36,27 +33,60 @@
   font-size: 1.7em;
 }
 
-.MuiSvgIcon-root.search {
-  color: var(--primary);
-  margin-right: 10px;
-}
-
-.form {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-}
-
-
-
 .user {
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-right: 20px;
 }
 
-.nav .dropdown-toggle::after {
-  color: white;
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 20px;
+  }
+
+  .brand {
+    margin-bottom: 10px;
+  }
+
+  .logo {
+    font-size: 1.8em;
+  }
+
+  .user {
+    margin-top: 10px;
+  }
+
+  .MuiSvgIcon-fontSizeLarge {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 10px;
+  }
+
+  .brand {
+    margin-bottom: 0;
+  }
+
+  .logo {
+    font-size: 1.5em;
+    letter-spacing: 2px;
+    margin: 0;
+  }
+
+  .user {
+    flex-direction: row;
+    margin-right: 0;
+    gap: 10px;
+  }
+
+  .MuiSvgIcon-fontSizeLarge {
+    font-size: 1.3em;
+  }
 }

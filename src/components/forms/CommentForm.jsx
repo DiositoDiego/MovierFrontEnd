@@ -6,7 +6,7 @@ import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
 import { Button } from "@mui/material";
 import "../../css/forms/comment-form.css";
-
+import AddCommentIcon from "@mui/icons-material/AddComment";
 export default function CommentForm(props) {
   const [comment, setComment] = useState("");
   const [isValidComment, setIsValidComment] = useState(true);
@@ -25,7 +25,7 @@ export default function CommentForm(props) {
     if (!isSubmitted) {
       const commentValid = comment.trim() !== "";
       setIsValidComment(commentValid);
-      
+
       if (commentValid) {
         setIsSubmitted(true);
         setIsLoading(true);
@@ -106,6 +106,7 @@ export default function CommentForm(props) {
           onClick={handleSubmit}
           style={{ width: "100%" }}
           disabled={isLoading}
+          endIcon={<AddCommentIcon />}
         >
           {!isLoading ? "Comentar" : <Spinner color="secondary" />}
         </Button>
