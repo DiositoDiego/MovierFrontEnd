@@ -20,7 +20,7 @@ export default function MoviesCards() {
   const [isLoading, setIsLoading] = useState(false);
   const imgSize = 300;
   const navigate = useNavigate();
-  const user_id = localStorage.getItem('userId')
+  const user_id = localStorage.getItem("userId");
 
   useEffect(() => {
     getMovies();
@@ -55,12 +55,9 @@ export default function MoviesCards() {
             <Card key={movie.id} className="card">
               <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
                 <h4 className="font-bold text-large title-text">
-                  {
-                    movie.title.length > 24 ?
-                      movie.title.substring(0, 24) + "..." 
-                      : 
-                      movie.title
-                  }
+                  {movie.title.length > 24
+                    ? movie.title.substring(0, 24) + "..."
+                    : movie.title}
                 </h4>
               </CardHeader>
               <CardBody className="overflow-visible py-2">
@@ -81,13 +78,13 @@ export default function MoviesCards() {
                   onClick={() => handleClick(movie.id)}
                   className="w-full"
                 >
-                  Ver más
+                  Ver detalles
                 </Button>
               </CardFooter>
             </Card>
           ))
         ) : (
-          <p>No hay peliculas disponibles</p>
+          <p className="no-peliculas">No hay peliculas disponibles</p>
         )}
       </Container>
     </>

@@ -78,13 +78,13 @@ export default function WatchedMoviesCards() {
                   onClick={() => handleClick(movie.movie_id)}
                   className="w-full"
                 >
-                  Ver más
+                  Ver detalles
                 </Button>
               </CardFooter>
             </Card>
           ))
         ) : (
-          <p>No hay peliculas disponibles</p>
+          <p className="no-peliculas">No hay peliculas disponibles</p>
         )}
       </Container>
     </>

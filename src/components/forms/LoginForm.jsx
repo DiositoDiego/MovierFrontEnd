@@ -12,7 +12,7 @@ import { useSearchParams } from "react-router-dom";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const [email, setEmail] = useState(searchParams[0].get("email") || '');
+  const [email, setEmail] = useState(searchParams[0].get("email") || "");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +22,8 @@ export default function LoginForm() {
   const validate = () => {
     const newErrors = {};
     if (!emailRegex.test(email)) newErrors.email = "Email no válido";
+    if (!passwordRegex.test(password))
+      newErrors.password = "Contraseña no válida";
     return newErrors;
   };
 
@@ -52,6 +54,7 @@ export default function LoginForm() {
           window.location.href = "/home";
         }
       } catch (e) {
+        setErrors({ form: "Error en el inicio de sesión" });
       } finally {
         setIsLoading(false);
       }
@@ -60,59 +63,59 @@ export default function LoginForm() {
 
   return (
     <>
-      <h1 className="title movier">MOVIER</h1>
-      <h4 className="subtitle">Inicia Sesión</h4>
-      <Container className="login-container">
-        <Form onSubmit={handleSubmitForm} className="form-group">
-          <Form.Group className="mb-3" controlId="emailForm">
-            <Input
-              type="email"
-              label="Email"
-              placeholder="Ingresa tu correo electrónico"
-              value={email}
-              onChange={handleChange(setEmail, "email")}
-              errorMessage={errors.email}
-              isInvalid={!!errors.email}
-              color="secondary"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="passwordForm">
-            <Input
-              type={showPassword ? "text" : "password"}
-              label="Contraseña"
-              placeholder="Ingresa tu contraseña"
-              value={password}
-              onChange={handleChange(setPassword, "password")}
-              endContent={
-                <Button onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </Button>
-              }
-              color="secondary"
-              errorMessage={errors.password}
-              isInvalid={!!errors.password}
-            />
-          </Form.Group>
-          {errors.form && <p className="error-message">{errors.form}</p>}
-          <Button
-            variant="contained"
-            disabled={isLoading}
-            className="button-submit"
-            type="submit"
-          >
-            {!isLoading ? (
-              "Iniciar sesión"
-            ) : (
-              <Spinner color="secondary" />
-            )}
-          </Button>
-        </Form>
-        <div className="create-account">
-          <p className="text-account">
-            ¿No tienes una cuenta? <a href="/signup">Regístrate aquí</a>
-          </p>
+      <div className="login">
+        <div className="card-login">
+          <h1 className="title movier">MOVIER</h1>
+          <h4 className="subtitle">Inicia Sesión</h4>
+          <Container className="login-container">
+            <Form onSubmit={handleSubmitForm} className="form-group">
+              <Form.Group className="mb-3" controlId="emailForm">
+                <Input
+                  type="email"
+                  label="Email"
+                  placeholder="Ingresa tu correo electrónico"
+                  value={email}
+                  onChange={handleChange(setEmail, "email")}
+                  errorMessage={errors.email}
+                  isInvalid={!!errors.email}
+                  color="secondary"
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="passwordForm">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  label="Contraseña"
+                  placeholder="Ingresa tu contraseña"
+                  value={password}
+                  onChange={handleChange(setPassword, "password")}
+                  endContent={
+                    <Button onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </Button>
+                  }
+                  color="secondary"
+                  errorMessage={errors.password}
+                  isInvalid={!!errors.password}
+                />
+              </Form.Group>
+              {errors.form && <p className="error-message">{errors.form}</p>}
+              <Button
+                variant="contained"
+                disabled={isLoading}
+                className="button-submit"
+                type="submit"
+              >
+                {!isLoading ? "Iniciar sesión" : <Spinner color="secondary" />}
+              </Button>
+            </Form>
+            <div className="create-account">
+              <p className="text-account">
+                ¿No tienes una cuenta? <a href="/signup">Regístrate aquí</a>
+              </p>
+            </div>
+          </Container>
         </div>
-      </Container>
+      </div>
     </>
   );
 }

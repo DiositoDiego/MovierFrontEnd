@@ -8,35 +8,62 @@
   gap: 20px;
 }
 
-.img {
+.movie-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.movie-image-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.movie-image {
   height: 440px;
-  object-fit: contain;
-  border-radius: 8px !important;
+  width: auto;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-.textColorWhite {
-  color: white;
-
-}
-
-.title-movie-2{
-  letter-spacing: 3px;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 900;
-  color: white;
-  
-  
-
-}
-
-.Col {
+.movie-info-col {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: white;
 }
 
-.commentContainer {
-  width: 100%;
+.movie-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+
+.movie-description {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.movie-genre {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.movie-button {
+  background-color: white;
+  color: var(--primary);
+  font-family: 'Poppins', sans-serif;
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.vertical-line-col {
+  display: flex;
+  justify-content: center;
 }
 
 .vertical-line {
@@ -44,37 +71,22 @@
   height: 100%;
 }
 
-@media (max-width: 768px) {
-  .mainContainer {
-    flex-direction: column;
-  }
-
-  .commentContainer {
-    width: 100%;
-  }
-
-  .Col {
-    max-height: none;
-  }
+.movie-status-col {
+  color: white;
 }
 
-h2,
-h3,
-h5 {
+.movie-status-title {
   margin-bottom: 10px;
-
 }
 
-p {
-  margin-bottom: 15px;
+.commentContainer,
+.comment-list-container {
+  width: 100%;
 }
 
 .comment {
-  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
-  margin-bottom: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .loader-container {
@@ -82,13 +94,39 @@ p {
   justify-content: center;
   align-items: center;
   height: 100vh;
- 
 }
-
-.MuiButtonBase-root.MuiButton-root.MuiButton-contained.button-movie{
+.MuiButtonBase-root.MuiButton-root.MuiButton-contained.button-movie {
   background-color: white;
   color: var(--primary);
   font-family: 'Poppins', sans-serif;
   padding: 10px 20px;
   border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .mainContainer {
+    flex-direction: column;
+  }
+
+  .movie-row {
+    flex-direction: column;
+  }
+
+  .movie-info-col {
+    order: 2;
+  }
+
+  .movie-image {
+    height: auto;
+  }
+}
+
+h2,
+h3,
+h5 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 15px;
 }
