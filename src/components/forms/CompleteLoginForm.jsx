@@ -159,6 +159,7 @@ export default function CompleteLoginForm() {
                 disabled={isLoading}
                 style={{ width: "100%" }}
                 type="submit"
+                endIcon={!isLoading && <LoginIcon />}
 
               >
                 {!isLoading ? (

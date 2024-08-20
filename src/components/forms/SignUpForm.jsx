@@ -92,7 +92,7 @@ export default function SignUpForm() {
                 disabled={isLoading}
                 className="button-submit"
                 type="submit"
-                endIcon={<SendIcon />}
+                endIcon={!isLoading && <SendIcon />}
               >
                 {!isLoading ? "Registrarse" : <Spinner color="secondary" />}
               </Button>

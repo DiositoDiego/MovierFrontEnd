@@ -134,7 +134,7 @@ export const CreateMovieForm = () => {
             className="save"
             onClick={onSubmit}
             disabled={isLoading}
-            endIcon={<AddIcon />}
+            endIcon={!isLoading && <AddIcon />}
           >
             {isLoading ? "Creando..." : "Crear Película"}
           </Button>
