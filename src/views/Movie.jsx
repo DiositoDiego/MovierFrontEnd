@@ -119,11 +119,13 @@ export default function Movie() {
                   variant="contained"
                   disabled={isWatchedLoading}
                   endIcon={
-                    isWatched ? (
-                      <VisibilityOffIcon color="secondary" />
-                    ) : (
-                      <VisibilityIcon color="secondary" />
-                    )
+                    isWatched
+                      ? !isWatchedLoading && (
+                          <VisibilityOffIcon color="secondary" />
+                        )
+                      : !isWatchedLoading && (
+                          <VisibilityIcon color="secondary" />
+                        )
                   }
                 >
                   {isWatchedLoading ? (

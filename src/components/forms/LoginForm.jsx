@@ -104,7 +104,7 @@ export default function LoginForm() {
                 disabled={isLoading}
                 className="button-submit"
                 type="submit"
-                endIcon={<LoginIcon />}
+                endIcon={!isLoading && <LoginIcon />}
               >
                 {!isLoading ? "Iniciar sesión" : <Spinner color="secondary" />}
               </Button>

@@ -78,7 +78,7 @@ export default function MoviesCards() {
                   auto
                   onClick={() => handleClick(movie.id)}
                   className="w-full"
-                  endIcon={<VisibilityIcon />}
+                  endIcon={!isLoading && <VisibilityIcon />}
                 >
                   Ver detalles
                 </Button>

@@ -106,7 +106,7 @@ export default function CommentForm(props) {
           onClick={handleSubmit}
           style={{ width: "100%" }}
           disabled={isLoading}
-          endIcon={<AddCommentIcon />}
+          endIcon={!isLoading && <AddCommentIcon />}
         >
           {!isLoading ? "Comentar" : <Spinner color="secondary" />}
         </Button>

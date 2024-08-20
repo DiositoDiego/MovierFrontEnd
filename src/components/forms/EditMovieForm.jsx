@@ -158,7 +158,7 @@ export const EditMovieForm = () => {
               className="save"
               onClick={onSubmit}
               disabled={isLoading}
-              endIcon={<EditIcon />}
+              endIcon={!isLoading && <EditIcon />}
             >
               {isLoading ? "Actualizando..." : "Actualizar Película"}
             </Button>

@@ -78,7 +78,7 @@ export default function WatchedMoviesCards() {
                   auto
                   onClick={() => handleClick(movie.movie_id)}
                   className="w-full"
-                  endIcon={<VisibilityIcon />}
+                  endIcon={!isLoading && <VisibilityIcon />}
                 >
                   Ver detalles
                 </Button>
