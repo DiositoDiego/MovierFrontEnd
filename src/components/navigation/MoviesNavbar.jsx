@@ -34,7 +34,7 @@ export default function MoviesNavbar() {
             </a>
           </Navbar>
 
-          {/* {rol !== "Administrador" && (
+          {rol !== "Administrador" && (
             <Button
               variant="light"
               onClick={handleSearchClick}
@@ -46,7 +46,7 @@ export default function MoviesNavbar() {
             >
               Busca películas
             </Button>
-          )} */}
+          )}
           <Navbar className="user">
             {rol !== "Administrador" && (
               <IconButton aria-label="delete">

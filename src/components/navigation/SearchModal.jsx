@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Modal, Container, Form } from "react-bootstrap";
-import axios from "axios";
+import api from "../../config/axios/client-gateway";
 import { Input } from "@nextui-org/react";
 import SearchIcon from "@mui/icons-material/Search";
 import Loader from "../../views/common/Loader";
@@ -36,7 +36,8 @@ const SearchModal = ({ initialSearchQuery = '', show, handleClose }) => {
   const searchMovies = async (query) => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${endpoints.SearchMoviesFunction}${query}`);
+      console.log(`${endpoints.SearchMoviesFunction}${query}`)
+      const response = await api.doGet(`${endpoints.SearchMoviesFunction}${query}`);
       if (response && response.status === 200) {
         setMovies(response.data.Peliculas);
       }
