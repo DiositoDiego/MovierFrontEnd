@@ -7,7 +7,7 @@ import api from "../../config/axios/client-gateway";
 import endpoints from "../../utils/endpoints";
 import { Input } from "@nextui-org/react";
 import { Button } from "@mui/material";
-
+import SendIcon from "@mui/icons-material/Send";
 export default function SignUpForm() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +92,7 @@ export default function SignUpForm() {
                 disabled={isLoading}
                 className="button-submit"
                 type="submit"
+                endIcon={<SendIcon />}
               >
                 {!isLoading ? "Registrarse" : <Spinner color="secondary" />}
               </Button>

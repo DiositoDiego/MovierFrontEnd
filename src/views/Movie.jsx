@@ -12,7 +12,8 @@ import { Chip } from "@nextui-org/react";
 import { Button } from "@mui/material";
 import MoviesNavbar from "../components/navigation/MoviesNavbar";
 import Swal from "sweetalert2";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 export default function Movie() {
   const { id } = useParams();
   const user_id = localStorage.getItem("userId");
@@ -117,6 +118,13 @@ export default function Movie() {
                   className="button-movie"
                   variant="contained"
                   disabled={isWatchedLoading}
+                  endIcon={
+                    isWatched ? (
+                      <VisibilityOffIcon color="secondary" />
+                    ) : (
+                      <VisibilityIcon color="secondary" />
+                    )
+                  }
                 >
                   {isWatchedLoading ? (
                     <Spinner color="secondary" />

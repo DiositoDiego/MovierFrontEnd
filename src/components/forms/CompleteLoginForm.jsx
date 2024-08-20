@@ -8,7 +8,7 @@ import endpoints from "../../utils/endpoints";
 import Swal from "sweetalert2";
 import "../../css/auth/Login.css";
 import { Button } from "@mui/material";
-
+import LoginIcon from '@mui/icons-material/Login';
 export default function CompleteLoginForm() {
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(true);
@@ -159,6 +159,7 @@ export default function CompleteLoginForm() {
                 disabled={isLoading}
                 style={{ width: "100%" }}
                 type="submit"
+
               >
                 {!isLoading ? (
                   "Completar registro"

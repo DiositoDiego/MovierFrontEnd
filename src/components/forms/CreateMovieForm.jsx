@@ -7,8 +7,9 @@ import endpoints from "../../utils/endpoints";
 import api from "../../config/axios/client-gateway";
 import genresLabel from "../../utils/genres";
 import { Select, SelectItem } from "@nextui-org/react";
-
+import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
+import CloseIcon from "@mui/icons-material/Close";
 export const CreateMovieForm = () => {
   const [title, setTitle] = useState("");
   const [genre, setGenre] = useState("");
@@ -86,7 +87,7 @@ export const CreateMovieForm = () => {
           onChange={handleChange(setTitle, "title")}
           color="secondary"
         />
-       
+
         <Select
           label="Generó"
           placeholder="Seleccione el genero de la película"
@@ -133,10 +134,16 @@ export const CreateMovieForm = () => {
             className="save"
             onClick={onSubmit}
             disabled={isLoading}
+            endIcon={<AddIcon />}
           >
             {isLoading ? "Creando..." : "Crear Película"}
           </Button>
-          <Button variant="contained" className="cancel" onClick={onCancel}>
+          <Button
+            variant="contained"
+            className="cancel"
+            onClick={onCancel}
+            endIcon={<CloseIcon />}
+          >
             Cancelar
           </Button>
         </div>

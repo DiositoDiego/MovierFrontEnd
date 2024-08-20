@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/react";
 import { Button, CardMedia } from "@mui/material";
 import "../../css/movies/movies.css";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 export default function WatchedMoviesCards() {
   const [movies, setMovies] = useState([]);
@@ -77,6 +78,7 @@ export default function WatchedMoviesCards() {
                   auto
                   onClick={() => handleClick(movie.movie_id)}
                   className="w-full"
+                  endIcon={<VisibilityIcon />}
                 >
                   Ver detalles
                 </Button>

@@ -192,11 +192,7 @@ export const MoviesTable = () => {
     <>
       <h1 className="title">Lista de películas</h1>
       <div className="header">
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={onAddMovie}
-        >
+        <Button variant="contained" endIcon={<AddIcon />} onClick={onAddMovie}>
           Agregar película
         </Button>
       </div>

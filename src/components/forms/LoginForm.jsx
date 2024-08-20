@@ -9,7 +9,7 @@ import "../../css/auth/Login.css";
 import { Button } from "@mui/material";
 import { Input } from "@nextui-org/react";
 import { useSearchParams } from "react-router-dom";
-
+import LoginIcon from "@mui/icons-material/Login";
 export default function LoginForm() {
   const searchParams = useSearchParams();
   const [email, setEmail] = useState(searchParams[0].get("email") || "");
@@ -104,6 +104,7 @@ export default function LoginForm() {
                 disabled={isLoading}
                 className="button-submit"
                 type="submit"
+                endIcon={<LoginIcon />}
               >
                 {!isLoading ? "Iniciar sesión" : <Spinner color="secondary" />}
               </Button>
